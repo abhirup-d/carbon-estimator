@@ -37,7 +37,8 @@ export const appState = {
     },
     facilities: [],
     data: {},
-    overrides: {}
+    overrides: {},
+    orenVerified: false
 };
 
 // ── Facility type labels ─────────────────────────────────────────────────────
@@ -451,14 +452,22 @@ function renderStep2() {
                     <button id="unit-toggle" class="btn-secondary" type="button">sq m</button>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="building-age">Building Age & Condition</label>
-                <select id="building-age">
-                    <option value="old">Pre-2000 / Poor insulation</option>
-                    <option value="standard" selected>2000–2015 / Standard</option>
-                    <option value="modern">Post-2015 / High-efficiency</option>
-                </select>
-                <small>Adjusts energy estimates: older buildings use ~30% more, modern ~25% less.</small>
+            <div class="oren-verified-section">
+                <div class="oren-verified-prompt" id="building-age-prompt">
+                    <div class="oren-badge">Oren Verified</div>
+                    <span>Add building age for a more accurate, Oren-verified estimate</span>
+                    <button type="button" class="btn-text" id="show-building-age">+ Add</button>
+                </div>
+                <div class="form-group hidden" id="building-age-group">
+                    <label for="building-age">Building Age & Condition</label>
+                    <select id="building-age">
+                        <option value="" selected>-- Not specified --</option>
+                        <option value="old">Pre-2000 / Poor insulation</option>
+                        <option value="standard">2000–2015 / Standard</option>
+                        <option value="modern">Post-2015 / High-efficiency</option>
+                    </select>
+                    <small>Adjusts energy estimates: older buildings use ~30% more, modern ~25% less.</small>
+                </div>
             </div>
             <div class="form-group custom-eui-group">
                 <button id="custom-eui-toggle" class="btn-text" type="button">+ Custom EUI (advanced)</button>
@@ -484,6 +493,9 @@ function bindStep2Events() {
     const areaInput      = document.getElementById('facility-area');
     const unitToggle     = document.getElementById('unit-toggle');
     const buildingAgeSelect = document.getElementById('building-age');
+    const buildingAgeGroup = document.getElementById('building-age-group');
+    const showBuildingAgeBtn = document.getElementById('show-building-age');
+    const buildingAgePrompt = document.getElementById('building-age-prompt');
     const customEUIBtn   = document.getElementById('custom-eui-toggle');
     const customEUISection = document.getElementById('custom-eui-section');
     const customEUIInput = document.getElementById('custom-eui-input');
@@ -501,8 +513,13 @@ function bindStep2Events() {
         appState.currentFacility.name = nameInput.value.trim();
     });
 
+    showBuildingAgeBtn.addEventListener('click', () => {
+        buildingAgeGroup.classList.remove('hidden');
+        buildingAgePrompt.classList.add('hidden');
+    });
+
     buildingAgeSelect.addEventListener('change', () => {
-        appState.currentFacility.buildingAge = buildingAgeSelect.value;
+        appState.currentFacility.buildingAge = buildingAgeSelect.value || 'standard';
     });
 
     typeSelect.addEventListener('change', () => {
@@ -572,7 +589,7 @@ function renderStep3() {
                 <strong>${meta.label}</strong>
                 <span>${meta.description}</span>
             </div>
-            <select class="eq-efficiency hidden" data-key="${key}">
+            <select class="eq-efficiency hidden oren-optional" data-key="${key}">
                 <option value="old">Old / Inefficient</option>
                 <option value="standard" selected>Standard</option>
                 <option value="high_efficiency">High-Efficiency</option>
@@ -607,13 +624,20 @@ function renderStep3() {
                         <input type="number" id="fleet-truck" min="0" step="1" value="0" data-key="fleet_truck" />
                     </div>
                 </div>
-                <div class="fleet-efficiency">
+                <div class="fleet-efficiency hidden" id="fleet-efficiency-group">
                     <label for="fleet-efficiency">Vehicle Age & Efficiency</label>
                     <select id="fleet-efficiency">
                         <option value="old">Older fleet (pre-2015, higher consumption)</option>
                         <option value="standard" selected>Average fleet (2015–2022)</option>
                         <option value="high_efficiency">Modern fleet (post-2022, fuel-efficient / hybrid)</option>
                     </select>
+                </div>
+            </div>
+            <div class="oren-verified-section">
+                <div class="oren-verified-prompt" id="eq-efficiency-prompt">
+                    <div class="oren-badge">Oren Verified</div>
+                    <span>Add equipment &amp; vehicle efficiency ratings for Oren-verified accuracy</span>
+                    <button type="button" class="btn-text" id="show-eq-efficiency">+ Add</button>
                 </div>
             </div>
         </div>
@@ -664,6 +688,27 @@ function bindStep3Events() {
     if (fleetEffSel) {
         fleetEffSel.addEventListener('change', () => {
             appState.currentFacility.equipmentEfficiency.fleet = fleetEffSel.value;
+        });
+    }
+
+    // Oren Verified: show efficiency selectors on demand
+    const showEqEffBtn = document.getElementById('show-eq-efficiency');
+    const eqEffPrompt = document.getElementById('eq-efficiency-prompt');
+    if (showEqEffBtn) {
+        showEqEffBtn.addEventListener('click', () => {
+            eqEffPrompt.classList.add('hidden');
+            // Show all efficiency dropdowns for checked equipment
+            document.querySelectorAll('.eq-efficiency.oren-optional').forEach(sel => {
+                const key = sel.dataset.key;
+                if (appState.currentFacility.equipment[key]) {
+                    sel.classList.remove('hidden');
+                }
+            });
+            // Show fleet efficiency
+            const fleetGroup = document.getElementById('fleet-efficiency-group');
+            if (fleetGroup) fleetGroup.classList.remove('hidden');
+            // Mark as verified
+            appState.orenVerified = true;
         });
     }
 
@@ -835,6 +880,10 @@ function bindStep4Buttons() {
         const result = computeCurrentFacility();
         const { currentFacility, location } = appState;
 
+        // Determine verification: building age was specified AND efficiency ratings were set
+        const buildingAgeProvided = currentFacility.buildingAge && currentFacility.buildingAge !== 'standard';
+        const isVerified = appState.orenVerified || buildingAgeProvided;
+
         const facilityRecord = {
             ...currentFacility,
             // Flatten result fields to top level so dashboard can access them directly
@@ -846,7 +895,8 @@ function bindStep4Buttons() {
             type: currentFacility.facilityType,
             location: { ...location },
             results: result,
-            overrides: { ...appState.overrides }
+            overrides: { ...appState.overrides },
+            orenVerified: isVerified
         };
 
         appState.facilities.push(facilityRecord);

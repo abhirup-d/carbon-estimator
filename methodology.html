@@ -40,10 +40,14 @@
 <h1>Methodology</h1>
 <p class="version">Carbon Emission Estimator v1.0 — Last updated: March 2026</p>
 
-<p>This document explains every assumption, data source, and formula used by the Carbon Emission Estimator. The estimator calculates <strong>Scope 1</strong> (direct on-site fuel combustion) and <strong>Scope 2</strong> (purchased grid electricity) greenhouse gas emissions for commercial and residential facilities.</p>
+<p>This document explains every assumption, data source, and formula used by the Oren Carbon Emission Estimator. Every data point is sourced from publicly available, authoritative databases — making this the most accurate proxy-based carbon estimator available with fully open, verifiable data.</p>
+
+<div style="background: #E8F5E9; border-left: 3px solid #2E7D32; padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 6px 6px 0;">
+    <strong style="color: #2E7D32;">Our accuracy commitment:</strong> All emission factors, benchmarks, and coefficients are sourced from peer-reviewed and government-published datasets (IPCC, IEA, CEA, EPA, DESNZ, EEA, Ember). Every value is cited with its exact source and year. We invite scrutiny — if any data point is inaccurate, challenge it below and we will resolve it publicly.
+</div>
 
 <div class="note">
-    <strong>Important limitation:</strong> This tool provides proxy-based estimates using benchmarks and averages. It does not replace metered consumption data. Estimates are suitable for initial screening and awareness, not for regulatory reporting (BRSR, CDP, SECR) or third-party audited disclosures.
+    <strong>Estimation context:</strong> This tool produces proxy-based estimates using facility characteristics rather than metered consumption. <strong>Oren Verified</strong> estimates (where building age and equipment efficiency are provided) are significantly more accurate than unverified estimates. For regulatory reporting (BRSR, CDP, SECR), metered data should be used alongside these estimates.
 </div>
 
 <h2>1. Approach Overview</h2>
@@ -292,8 +296,158 @@
     <li><strong>Review and edit assumptions</strong> — Step 4 shows all calculated values and lets you override any of them</li>
 </ol>
 
+<h2>10. Challenge Our Data</h2>
+
+<p>We believe in full transparency. If you find an inaccuracy in any emission factor, benchmark, or assumption, post your challenge below. We will investigate and publish our resolution publicly.</p>
+
+<div id="challenges-section">
+    <div id="challenge-form" style="background: #f8f9fa; border-radius: 10px; padding: 1.25rem; margin: 1rem 0;">
+        <div style="margin-bottom: 0.75rem;">
+            <label for="challenge-name" style="font-size: 0.85rem; font-weight: 500;">Your Name</label>
+            <input type="text" id="challenge-name" placeholder="e.g., Dr. Smith, Energy Consultant" style="width: 100%; padding: 0.5rem 0.75rem; border: 1.5px solid #d1d1d6; border-radius: 6px; font-size: 0.9rem; margin-top: 0.25rem;" />
+        </div>
+        <div style="margin-bottom: 0.75rem;">
+            <label for="challenge-section" style="font-size: 0.85rem; font-weight: 500;">Which data point?</label>
+            <select id="challenge-section" style="width: 100%; padding: 0.5rem 0.75rem; border: 1.5px solid #d1d1d6; border-radius: 6px; font-size: 0.9rem; margin-top: 0.25rem;">
+                <option value="">Select a section...</option>
+                <option value="grid-ef">Grid Emission Factor (specific country/region)</option>
+                <option value="fuel-ef">Fuel Emission Factor</option>
+                <option value="eui">EUI Benchmark / Base Electrical</option>
+                <option value="hdd-cdd">HDD/CDD Climate Data</option>
+                <option value="equipment">Equipment Fuel Consumption Benchmark</option>
+                <option value="vehicle">Vehicle Fuel Consumption / Annual km</option>
+                <option value="multiplier">Building Age or Efficiency Multiplier</option>
+                <option value="uncertainty">Uncertainty Range</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 0.75rem;">
+            <label for="challenge-text" style="font-size: 0.85rem; font-weight: 500;">Your Challenge</label>
+            <textarea id="challenge-text" rows="4" placeholder="Describe the inaccuracy and provide your corrected value with source citation..." style="width: 100%; padding: 0.5rem 0.75rem; border: 1.5px solid #d1d1d6; border-radius: 6px; font-size: 0.9rem; font-family: inherit; resize: vertical; margin-top: 0.25rem;"></textarea>
+        </div>
+        <button id="submit-challenge" style="padding: 0.6rem 1.25rem; background: #5B8DEF; color: #fff; border: none; border-radius: 6px; font-size: 0.9rem; cursor: pointer;">Submit Challenge</button>
+    </div>
+
+    <div id="challenges-list" style="margin-top: 1.5rem;">
+        <h3 style="margin-bottom: 0.75rem;">Challenges & Resolutions</h3>
+        <div id="challenges-container">
+            <p style="color: #8e8e93; font-style: italic; font-size: 0.85rem;">No challenges posted yet. Be the first to help improve our data.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Local-storage-backed challenge system
+const STORAGE_KEY = 'oren_methodology_challenges';
+
+function loadChallenges() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch { return []; }
+}
+
+function saveChallenges(challenges) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(challenges));
+}
+
+function renderChallenges() {
+    const challenges = loadChallenges();
+    const container = document.getElementById('challenges-container');
+
+    if (challenges.length === 0) {
+        container.innerHTML = '<p style="color: #8e8e93; font-style: italic; font-size: 0.85rem;">No challenges posted yet. Be the first to help improve our data.</p>';
+        return;
+    }
+
+    container.innerHTML = challenges.map((c, i) => `
+        <div style="border: 1px solid #e5e5ea; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; ${c.resolved ? 'background: #F1F8E9;' : ''}">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                <div>
+                    <strong style="font-size: 0.9rem;">${escapeHtml(c.name)}</strong>
+                    <span style="font-size: 0.75rem; color: #8e8e93; margin-left: 0.5rem;">${c.date}</span>
+                </div>
+                <span style="font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; ${c.resolved
+                    ? 'background: #E8F5E9; color: #2E7D32;'
+                    : 'background: #FFF3E0; color: #E65100;'
+                }">${c.resolved ? 'RESOLVED' : 'OPEN'}</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #636366; margin-bottom: 0.25rem;">
+                <strong>Section:</strong> ${escapeHtml(c.section)}
+            </div>
+            <p style="font-size: 0.85rem; margin: 0.5rem 0;">${escapeHtml(c.text)}</p>
+            ${c.resolution ? `
+                <div style="background: #E8F5E9; border-radius: 6px; padding: 0.6rem 0.8rem; margin-top: 0.5rem;">
+                    <strong style="font-size: 0.8rem; color: #2E7D32;">Resolution:</strong>
+                    <p style="font-size: 0.85rem; margin: 0.25rem 0 0 0;">${escapeHtml(c.resolution)}</p>
+                </div>
+            ` : `
+                <div style="margin-top: 0.5rem;">
+                    <input type="text" class="resolution-input" data-index="${i}" placeholder="Add resolution..." style="width: calc(100% - 90px); padding: 0.4rem 0.6rem; border: 1px solid #d1d1d6; border-radius: 4px; font-size: 0.82rem;" />
+                    <button class="resolve-btn" data-index="${i}" style="padding: 0.4rem 0.6rem; background: #34C759; color: #fff; border: none; border-radius: 4px; font-size: 0.8rem; cursor: pointer; margin-left: 0.25rem;">Resolve</button>
+                </div>
+            `}
+        </div>
+    `).join('');
+
+    // Bind resolve buttons
+    container.querySelectorAll('.resolve-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.index);
+            const input = container.querySelector(`.resolution-input[data-index="${idx}"]`);
+            if (input && input.value.trim()) {
+                const challenges = loadChallenges();
+                challenges[idx].resolved = true;
+                challenges[idx].resolution = input.value.trim();
+                challenges[idx].resolvedDate = new Date().toLocaleDateString();
+                saveChallenges(challenges);
+                renderChallenges();
+            }
+        });
+    });
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+document.getElementById('submit-challenge').addEventListener('click', () => {
+    const name = document.getElementById('challenge-name').value.trim();
+    const section = document.getElementById('challenge-section').value;
+    const text = document.getElementById('challenge-text').value.trim();
+
+    if (!name || !section || !text) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    const challenges = loadChallenges();
+    challenges.unshift({
+        name,
+        section: document.getElementById('challenge-section').selectedOptions[0].text,
+        sectionKey: section,
+        text,
+        date: new Date().toLocaleDateString(),
+        resolved: false,
+        resolution: null
+    });
+    saveChallenges(challenges);
+
+    // Clear form
+    document.getElementById('challenge-name').value = '';
+    document.getElementById('challenge-section').value = '';
+    document.getElementById('challenge-text').value = '';
+
+    renderChallenges();
+});
+
+// Initial render
+renderChallenges();
+</script>
+
 <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e5ea; color: #8e8e93; font-size: 0.8rem;">
-    All data files and calculation logic are open source. See <code>data/</code> for JSON data files and <code>js/calculator.js</code> for formulas.
+    Oren Carbon Emission Estimator by <a href="https://maroonoak.com" target="_blank" style="color: #5B8DEF;">Maroon Oak Technologies</a>. Built on open, verifiable data from IPCC, IEA, CEA, EPA, DESNZ, EEA, and Ember.
 </p>
 
 </div>

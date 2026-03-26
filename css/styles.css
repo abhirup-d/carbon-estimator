@@ -671,6 +671,86 @@ select:focus, input:focus {
     padding: 1rem 0;
 }
 
+/* ── Oren Verified Prompts ── */
+.oren-verified-section {
+    margin-top: 1rem;
+}
+
+.oren-verified-prompt {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+    border: 1.5px solid #81C784;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.oren-verified-prompt span {
+    font-size: 0.82rem;
+    color: #2E7D32;
+}
+
+.oren-badge {
+    display: inline-block;
+    background: #2E7D32;
+    color: #fff;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* ── Dashboard Verification Badge ── */
+.verification-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.verification-badge.verified {
+    background: #E8F5E9;
+    color: #2E7D32;
+    border: 1px solid #81C784;
+}
+
+.verification-badge.partial {
+    background: #FFF8E1;
+    color: #F57F17;
+    border: 1px solid #FFD54F;
+}
+
+.verification-badge.unverified {
+    background: #FBE9E7;
+    color: #BF360C;
+    border: 1px solid #FFAB91;
+}
+
+.verification-icon {
+    font-size: 1.1rem;
+}
+
+.verification-link {
+    margin-left: auto;
+    font-size: 0.78rem;
+    color: inherit;
+    opacity: 0.8;
+}
+
+.verification-link:hover {
+    opacity: 1;
+}
+
 /* ── Error ── */
 .error {
     color: #FF3B30;
