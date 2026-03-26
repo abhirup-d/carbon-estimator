@@ -417,8 +417,19 @@ export function renderDashboard(container, facilities, data) {
 
             <div class="dash-headline">
                 <div class="headline-total">
-                    <span class="headline-number">${fmt(totalTonne)}</span>
+                    <span class="headline-number">${fmt(totalTonne, 1)}</span>
                     <span class="headline-unit">tCO2e / year</span>
+                </div>
+                <div class="uncertainty-range">
+                    <span class="range-label">Estimated range:</span>
+                    <span class="range-values">${fmt(kgToTonne(agg.uncertainty.low), 1)} — ${fmt(kgToTonne(agg.uncertainty.high), 1)} tCO2e</span>
+                    <div class="range-bar-track">
+                        <div class="range-bar-fill"></div>
+                        <div class="range-bar-marker" style="left: ${((grandTotal - agg.uncertainty.low) / (agg.uncertainty.high - agg.uncertainty.low) * 100).toFixed(0)}%"></div>
+                    </div>
+                    <div class="range-labels">
+                        <span>Low</span><span>Best estimate</span><span>High</span>
+                    </div>
                 </div>
                 <div class="headline-badges">
                     <div class="badge scope1">

@@ -1,6 +1,24 @@
 // Pure calculation functions for Scope 1 & Scope 2 emissions
 // All functions take data objects and return results — no side effects
 
+// ── Uncertainty multipliers by facility type ──
+// Proxy-based estimation has inherent variance. These factors represent
+// the typical range of energy consumption for a given facility type,
+// driven by: building age, envelope quality, occupancy, operational hours.
+// Source: derived from CBECS/CIBSE distribution data (10th-90th percentile).
+const UNCERTAINTY = {
+    office:              { low: 0.65, high: 1.45 },
+    retail:              { low: 0.60, high: 1.50 },
+    warehouse:           { low: 0.55, high: 1.60 },
+    light_manufacturing: { low: 0.50, high: 1.70 },
+    heavy_manufacturing: { low: 0.45, high: 1.80 },
+    restaurant:          { low: 0.60, high: 1.50 },
+    hospital:            { low: 0.70, high: 1.35 },
+    hotel:               { low: 0.65, high: 1.45 },
+    residential:         { low: 0.55, high: 1.60 },
+    school:              { low: 0.65, high: 1.45 }
+};
+
 // ── Benchmark data: average kgCO2e/m2/yr by facility type and climate zone ──
 const BENCHMARKS = {
     office:              { "1": 95, "2": 85, "3": 80, "4": 75, "5": 72, "6": 70, "7": 68, "8": 66 },
@@ -138,6 +156,9 @@ export function calculateFacility(facility, lookups) {
         scope1Breakdown.push({ type: key, count, fuelType, ...result });
     }
 
+    const midTotal = scope1Total + scope2Result.emissions;
+    const u = UNCERTAINTY[facilityType] || { low: 0.60, high: 1.50 };
+
     return {
         scope1Total,
         scope2Total: scope2Result.emissions,
@@ -146,7 +167,14 @@ export function calculateFacility(facility, lookups) {
         gridEFUsed,
         climateZone,
         scope2Detail: scope2Result,
-        scope1Breakdown
+        scope1Breakdown,
+        uncertainty: {
+            low: midTotal * u.low,
+            mid: midTotal,
+            high: midTotal * u.high,
+            lowFactor: u.low,
+            highFactor: u.high
+        }
     };
 }
 
@@ -158,11 +186,27 @@ export function calculateFacility(facility, lookups) {
 export function aggregateFacilities(facilities) {
     let scope1Total = 0;
     let scope2Total = 0;
+    let uncertaintyLow = 0;
+    let uncertaintyHigh = 0;
     for (const f of facilities) {
         scope1Total += f.scope1Total || 0;
         scope2Total += f.scope2Total || 0;
+        if (f.uncertainty) {
+            uncertaintyLow += f.uncertainty.low;
+            uncertaintyHigh += f.uncertainty.high;
+        }
     }
-    return { scope1Total, scope2Total, grandTotal: scope1Total + scope2Total };
+    const grandTotal = scope1Total + scope2Total;
+    return {
+        scope1Total,
+        scope2Total,
+        grandTotal,
+        uncertainty: {
+            low: uncertaintyLow || grandTotal * 0.6,
+            mid: grandTotal,
+            high: uncertaintyHigh || grandTotal * 1.5
+        }
+    };
 }
 
 /**
