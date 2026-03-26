@@ -26,6 +26,13 @@ export const appState = {
             fleet_car: 0,
             fleet_van: 0,
             fleet_truck: 0
+        },
+        equipmentEfficiency: {
+            heating_boiler: 'standard',
+            generator: 'standard',
+            cooking: 'standard',
+            furnace: 'standard',
+            fleet: 'standard'
         }
     },
     facilities: [],
@@ -508,6 +515,11 @@ function renderStep3() {
                 <strong>${meta.label}</strong>
                 <span>${meta.description}</span>
             </div>
+            <select class="eq-efficiency hidden" data-key="${key}">
+                <option value="old">Old / Inefficient</option>
+                <option value="standard" selected>Standard</option>
+                <option value="high_efficiency">High-Efficiency</option>
+            </select>
         </div>
     `).join('');
 
@@ -538,6 +550,14 @@ function renderStep3() {
                         <input type="number" id="fleet-truck" min="0" step="1" value="0" data-key="fleet_truck" />
                     </div>
                 </div>
+                <div class="fleet-efficiency">
+                    <label for="fleet-efficiency">Vehicle Age & Efficiency</label>
+                    <select id="fleet-efficiency">
+                        <option value="old">Older fleet (pre-2015, higher consumption)</option>
+                        <option value="standard" selected>Average fleet (2015–2022)</option>
+                        <option value="high_efficiency">Modern fleet (post-2022, fuel-efficient / hybrid)</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="step-footer">
@@ -552,12 +572,24 @@ function renderStep3() {
 function bindStep3Events() {
     const visualPanel = document.getElementById('visual-panel');
 
-    // Checkboxes
+    // Checkboxes — show/hide efficiency selector when toggled
     document.querySelectorAll('.equip-checkbox').forEach(cb => {
         cb.addEventListener('change', () => {
             const key = cb.dataset.key;
             appState.currentFacility.equipment[key] = cb.checked;
+            // Show/hide the efficiency dropdown for this equipment
+            const effSelect = cb.closest('.equipment-item').querySelector('.eq-efficiency');
+            if (effSelect) {
+                effSelect.classList.toggle('hidden', !cb.checked);
+            }
             renderBuilding(visualPanel, appState.currentFacility.facilityType, appState.currentFacility.equipment);
+        });
+    });
+
+    // Equipment efficiency selectors
+    document.querySelectorAll('.eq-efficiency').forEach(sel => {
+        sel.addEventListener('change', () => {
+            appState.currentFacility.equipmentEfficiency[sel.dataset.key] = sel.value;
         });
     });
 
@@ -569,6 +601,14 @@ function bindStep3Events() {
             renderBuilding(visualPanel, appState.currentFacility.facilityType, appState.currentFacility.equipment);
         });
     });
+
+    // Fleet efficiency
+    const fleetEffSel = document.getElementById('fleet-efficiency');
+    if (fleetEffSel) {
+        fleetEffSel.addEventListener('change', () => {
+            appState.currentFacility.equipmentEfficiency.fleet = fleetEffSel.value;
+        });
+    }
 
     document.getElementById('step3-back').addEventListener('click', () => showStep(2));
     document.getElementById('step3-next').addEventListener('click', () => showStep(4));
@@ -815,6 +855,13 @@ function bindStep5Events() {
                 fleet_car: 0,
                 fleet_van: 0,
                 fleet_truck: 0
+            },
+            equipmentEfficiency: {
+                heating_boiler: 'standard',
+                generator: 'standard',
+                cooking: 'standard',
+                furnace: 'standard',
+                fleet: 'standard'
             }
         };
         appState.overrides = {};

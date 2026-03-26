@@ -86,8 +86,13 @@ export function calculateFacility(facility, lookups) {
         facilityType,
         equipment = {},
         customEUI = null,
-        buildingAgeMultiplier = 1.0
+        buildingAgeMultiplier = 1.0,
+        equipmentEfficiency = {}
     } = facility;
+
+    // Equipment efficiency multipliers
+    // Old/inefficient equipment uses more fuel, high-efficiency uses less
+    const EFF_MULTIPLIERS = { old: 1.35, standard: 1.0, high_efficiency: 0.70 };
 
     const {
         climateZone,
@@ -131,9 +136,13 @@ export function calculateFacility(facility, lookups) {
             || 'natural_gas';
         const fuelEF = fuelFactors[fuelType] || 0;
 
-        const result = calculateEquipmentEmissions(area, benchmark, fuelEF, facilityMultiplier);
+        // Equipment efficiency multiplier
+        const effMultiplier = EFF_MULTIPLIERS[equipmentEfficiency[key]] || 1.0;
+        const totalMultiplier = facilityMultiplier * effMultiplier;
+
+        const result = calculateEquipmentEmissions(area, benchmark, fuelEF, totalMultiplier);
         scope1Total += result.emissions;
-        scope1Breakdown.push({ type: key, fuelType, ...result });
+        scope1Breakdown.push({ type: key, fuelType, efficiency: equipmentEfficiency[key] || 'standard', ...result });
     }
 
     // ── Scope 1: fleet vehicles ──
@@ -151,10 +160,11 @@ export function calculateFacility(facility, lookups) {
             || 'diesel';
         const fuelEF = fuelFactors[fuelType] || 0;
 
-        const fuelConsumptionPerKm = profile.fuelConsumptionPerKm || 0.08;
+        const fleetEffMultiplier = EFF_MULTIPLIERS[equipmentEfficiency.fleet] || 1.0;
+        const fuelConsumptionPerKm = (profile.fuelConsumptionPerKm || 0.08) * fleetEffMultiplier;
         const result = calculateFleetEmissions(count, annualKm, fuelConsumptionPerKm, fuelEF);
         scope1Total += result.emissions;
-        scope1Breakdown.push({ type: key, count, fuelType, ...result });
+        scope1Breakdown.push({ type: key, count, fuelType, efficiency: equipmentEfficiency.fleet || 'standard', ...result });
     }
 
     const midTotal = scope1Total + scope2Result.emissions;

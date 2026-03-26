@@ -259,6 +259,27 @@ select:focus, input:focus {
     color: #8e8e93;
 }
 
+.eq-efficiency {
+    width: auto;
+    min-width: 130px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.78rem;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.fleet-efficiency {
+    margin-top: 0.75rem;
+}
+
+.fleet-efficiency label {
+    margin-top: 0;
+}
+
+.fleet-efficiency select {
+    font-size: 0.85rem;
+}
+
 .fleet-section {
     margin-top: 1rem;
     padding-top: 1rem;
