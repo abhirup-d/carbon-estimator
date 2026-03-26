@@ -462,6 +462,7 @@ export function renderDashboard(container, facilities, data) {
             <div class="dash-export">
                 <button id="export-csv" class="btn-secondary">Download CSV</button>
                 <button id="export-pdf" class="btn-secondary">Download PDF</button>
+                <a href="methodology.html" target="_blank" class="btn-secondary" style="text-decoration:none;text-align:center;">Methodology</a>
             </div>
         </div>
     `;

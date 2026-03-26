@@ -305,7 +305,7 @@ function renderStep1() {
     step.innerHTML = `
         <div class="step-header">
             <h2>Step 1: Location</h2>
-            <p>Select your country and region to get the right emission factors.</p>
+            <p>Select your country and region to get the right emission factors. <a href="methodology.html" target="_blank" class="btn-text" style="font-size:0.85rem;">How does this work?</a></p>
         </div>
         <div class="step-body">
             <div class="form-group">

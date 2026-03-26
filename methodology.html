@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology — Carbon Emission Estimator</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body { background: #fff; }
+        .methodology {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.7;
+            color: #1a1a2e;
+        }
+        .methodology h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .methodology h2 { font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.5rem; border-bottom: 1px solid #e5e5ea; padding-bottom: 0.25rem; }
+        .methodology h3 { font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.35rem; }
+        .methodology p, .methodology li { font-size: 0.92rem; color: #333; }
+        .methodology ul, .methodology ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+        .methodology li { margin-bottom: 0.35rem; }
+        .methodology table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.85rem; }
+        .methodology th, .methodology td { padding: 0.5rem 0.75rem; border: 1px solid #e5e5ea; text-align: left; }
+        .methodology th { background: #f8f9fa; font-weight: 600; color: #636366; }
+        .methodology code { background: #f2f2f7; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+        .methodology .formula { background: #f8f9fa; border-left: 3px solid #5B8DEF; padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 6px 6px 0; font-family: monospace; font-size: 0.9rem; }
+        .methodology .note { background: #FFF3E0; border-left: 3px solid #F5A623; padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 6px 6px 0; font-size: 0.85rem; }
+        .methodology .source-tag { display: inline-block; background: #E3F2FD; color: #1565C0; padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
+        .back-link { display: inline-block; margin-bottom: 1rem; color: #5B8DEF; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { text-decoration: underline; }
+        .version { color: #8e8e93; font-size: 0.8rem; margin-top: 0.25rem; }
+    </style>
+</head>
+<body>
+<div class="methodology">
+
+<a href="index.html" class="back-link">&larr; Back to Estimator</a>
+
+<h1>Methodology</h1>
+<p class="version">Carbon Emission Estimator v1.0 — Last updated: March 2026</p>
+
+<p>This document explains every assumption, data source, and formula used by the Carbon Emission Estimator. The estimator calculates <strong>Scope 1</strong> (direct on-site fuel combustion) and <strong>Scope 2</strong> (purchased grid electricity) greenhouse gas emissions for commercial and residential facilities.</p>
+
+<div class="note">
+    <strong>Important limitation:</strong> This tool provides proxy-based estimates using benchmarks and averages. It does not replace metered consumption data. Estimates are suitable for initial screening and awareness, not for regulatory reporting (BRSR, CDP, SECR) or third-party audited disclosures.
+</div>
+
+<h2>1. Approach Overview</h2>
+
+<p>The estimator avoids asking for electricity bills or fuel consumption data. Instead, it uses static facility characteristics that a person can answer from memory:</p>
+
+<ul>
+    <li><strong>Location</strong> (country, region, city) — determines grid emission factor, climate, and fuel mix defaults</li>
+    <li><strong>Facility type</strong> (10 categories) — determines energy use intensity benchmarks</li>
+    <li><strong>Floor area</strong> — the primary scaling factor for energy consumption</li>
+    <li><strong>Building age</strong> (pre-2000, 2000–2015, post-2015) — adjusts EUI for building quality</li>
+    <li><strong>On-site equipment</strong> (boiler, generator, cooking, furnace, fleet) — determines Scope 1 sources</li>
+    <li><strong>Equipment efficiency</strong> (old, standard, high-efficiency) — adjusts fuel consumption</li>
+</ul>
+
+<h2>2. Scope 2 — Grid Electricity</h2>
+
+<h3>2.1 Energy Use Intensity (EUI)</h3>
+
+<p>EUI represents the total electricity consumed per square metre per year (kWh/m²/yr). It is the most critical assumption in the model.</p>
+
+<p><strong>Primary method — HDD/CDD-based calculation:</strong> When the user selects a city, the estimator uses Heating Degree Days (HDD) and Cooling Degree Days (CDD) to compute EUI as a continuous function of climate:</p>
+
+<div class="formula">
+    EUI = Base Electrical + (CDD × Cooling Coefficient)
+</div>
+
+<p>Where:</p>
+<ul>
+    <li><strong>Base Electrical</strong> — non-HVAC load (lighting, plugs, process equipment) that doesn't vary with climate</li>
+    <li><strong>CDD</strong> — annual Cooling Degree Days (base 18°C) for the selected city</li>
+    <li><strong>Cooling Coefficient</strong> — kWh per m² per CDD, varies by facility type</li>
+</ul>
+
+<table>
+    <tr><th>Facility Type</th><th>Base Electrical (kWh/m²/yr)</th><th>Cooling Coeff. (kWh/m²/CDD)</th></tr>
+    <tr><td>Office</td><td>65</td><td>0.045</td></tr>
+    <tr><td>Retail / Shop</td><td>75</td><td>0.050</td></tr>
+    <tr><td>Warehouse</td><td>25</td><td>0.015</td></tr>
+    <tr><td>Light Manufacturing</td><td>120</td><td>0.040</td></tr>
+    <tr><td>Heavy Manufacturing</td><td>250</td><td>0.045</td></tr>
+    <tr><td>Restaurant</td><td>140</td><td>0.055</td></tr>
+    <tr><td>Hospital / Clinic</td><td>150</td><td>0.060</td></tr>
+    <tr><td>Hotel</td><td>85</td><td>0.050</td></tr>
+    <tr><td>Residential</td><td>30</td><td>0.025</td></tr>
+    <tr><td>School / University</td><td>55</td><td>0.035</td></tr>
+</table>
+
+<p><strong>Fallback method — Zone-based lookup:</strong> If no city is selected, the estimator falls back to ASHRAE climate zone-based EUI tables (zones 1–8). These are pre-computed from the HDD/CDD model at zone-representative values.</p>
+
+<h3>2.2 Building Age Adjustment</h3>
+
+<p>The EUI is multiplied by a building age factor:</p>
+
+<table>
+    <tr><th>Building Age</th><th>Multiplier</th><th>Rationale</th></tr>
+    <tr><td>Pre-2000 / Poor insulation</td><td>1.30×</td><td>Older buildings have poorer envelope, less efficient HVAC, higher infiltration</td></tr>
+    <tr><td>2000–2015 / Standard</td><td>1.00×</td><td>Baseline — represents average stock compliant with codes of that era</td></tr>
+    <tr><td>Post-2015 / High-efficiency</td><td>0.75×</td><td>Modern codes (ASHRAE 90.1-2016+, ECBC 2017+), better glazing, LED lighting</td></tr>
+</table>
+
+<p>If the user provides a custom EUI, the building age multiplier is bypassed.</p>
+
+<h3>2.3 Scope 2 Calculation</h3>
+
+<div class="formula">
+    Estimated Electricity (kWh/yr) = Floor Area (m²) × EUI (kWh/m²/yr)<br>
+    Scope 2 Emissions (kgCO2e) = Estimated Electricity × Grid Emission Factor (kgCO2e/kWh)
+</div>
+
+<h3>2.4 Grid Emission Factors</h3>
+
+<p>Grid EFs are location-based (not market-based). They represent the average carbon intensity of electricity delivered from the grid.</p>
+
+<table>
+    <tr><th>Country</th><th>National Avg (kgCO2e/kWh)</th><th>Source</th></tr>
+    <tr><td>India</td><td>0.727</td><td><span class="source-tag">CEA CO2 Baseline Database v20.0, Dec 2024</span></td></tr>
+    <tr><td>United States</td><td>0.384</td><td><span class="source-tag">EPA eGRID 2022, Jan 2024</span></td></tr>
+    <tr><td>China</td><td>0.560</td><td><span class="source-tag">Ember Global Electricity Review 2025</span></td></tr>
+    <tr><td>United Kingdom</td><td>0.207</td><td><span class="source-tag">DESNZ GHG Conversion Factors 2024</span></td></tr>
+    <tr><td>Germany</td><td>0.371</td><td><span class="source-tag">EEA / Ember 2023</span></td></tr>
+    <tr><td>France</td><td>0.056</td><td><span class="source-tag">EEA 2023</span></td></tr>
+    <tr><td>Italy</td><td>0.331</td><td><span class="source-tag">EEA / Statista 2023</span></td></tr>
+    <tr><td>Japan</td><td>0.450</td><td><span class="source-tag">JAIF / METI FY2023</span></td></tr>
+    <tr><td>South Korea</td><td>0.396</td><td><span class="source-tag">Ember 2024</span></td></tr>
+    <tr><td>Australia</td><td>0.630</td><td><span class="source-tag">NGA Factors 2024 (DCCEEW)</span></td></tr>
+    <tr><td>Canada</td><td>0.120</td><td><span class="source-tag">Environment Canada NIR</span></td></tr>
+    <tr><td>Brazil</td><td>0.075</td><td><span class="source-tag">Ember / IEA</span></td></tr>
+    <tr><td>South Africa</td><td>0.950</td><td><span class="source-tag">Eskom Integrated Report 2023</span></td></tr>
+    <tr><td>Indonesia</td><td>0.760</td><td><span class="source-tag">Ember / IEA 2023</span></td></tr>
+    <tr><td>Saudi Arabia</td><td>0.571</td><td><span class="source-tag">IEA / Ember</span></td></tr>
+    <tr><td>Russia</td><td>0.330</td><td><span class="source-tag">IEA 2023</span></td></tr>
+    <tr><td>Turkey</td><td>0.440</td><td><span class="source-tag">IEA / Ember 2023</span></td></tr>
+    <tr><td>Mexico</td><td>0.420</td><td><span class="source-tag">IEA / Ember 2023</span></td></tr>
+    <tr><td>Argentina</td><td>0.310</td><td><span class="source-tag">IEA / Ember 2023</span></td></tr>
+</table>
+
+<p>Regional/state-level EFs are available for India (14 states), US (11 eGRID subregions), Australia (8 states), Canada (7 provinces), and China (6 provinces). See <code>data/emission-factors.json</code> for complete values.</p>
+
+<h2>3. Scope 1 — On-Site Fuel Combustion</h2>
+
+<h3>3.1 Area-Based Equipment</h3>
+
+<p>For each piece of equipment present on-site (boiler, generator, cooking, furnace), fuel consumption is estimated from benchmarks:</p>
+
+<div class="formula">
+    Estimated Fuel Use = Floor Area × Benchmark × Facility Multiplier × Efficiency Multiplier<br>
+    Scope 1 Emissions (kgCO2e) = Estimated Fuel Use × Fuel Emission Factor
+</div>
+
+<p><strong>Benchmarks</strong> (fuel units per m² per year) vary by ASHRAE climate zone. Heating boilers use significantly more fuel in cold zones; generators use more in hot zones (power outages, backup AC).</p>
+
+<table>
+    <tr><th>Equipment</th><th>Zone 1 (Hot)</th><th>Zone 4 (Mixed)</th><th>Zone 7 (Cold)</th><th>Fuel Unit</th></tr>
+    <tr><td>Heating Boiler</td><td>0.5</td><td>9.0</td><td>24.0</td><td>m³ natural gas / m²</td></tr>
+    <tr><td>Backup Generator</td><td>1.2</td><td>0.6</td><td>0.5</td><td>litres diesel / m²</td></tr>
+    <tr><td>Cooking Equipment</td><td>2.0</td><td>2.0</td><td>2.0</td><td>kg LPG / m²</td></tr>
+    <tr><td>Industrial Furnace</td><td>15.0</td><td>15.0</td><td>15.0</td><td>m³ nat. gas / m²</td></tr>
+</table>
+
+<p><strong>Facility Multipliers:</strong> Some equipment benchmarks are adjusted for facility type. Cooking equipment uses 3× more fuel in restaurants vs. the default. Furnaces use 2.5× in heavy manufacturing, 1.5× in light manufacturing.</p>
+
+<h3>3.2 Equipment Efficiency Adjustment</h3>
+
+<table>
+    <tr><th>Rating</th><th>Multiplier</th><th>Represents</th></tr>
+    <tr><td>Old / Inefficient</td><td>1.35×</td><td>Pre-2000 equipment, low combustion efficiency (60–75%), poor maintenance</td></tr>
+    <tr><td>Standard</td><td>1.00×</td><td>Current stock average, typical maintenance, 80–90% efficiency</td></tr>
+    <tr><td>High-Efficiency</td><td>0.70×</td><td>Condensing boilers (95%+), modern generators, high-efficiency burners</td></tr>
+</table>
+
+<h3>3.3 Fleet Vehicles</h3>
+
+<div class="formula">
+    Vehicle Emissions = Count × Annual km × Fuel Consumption (L/km) × Fuel EF (kgCO2e/L)
+</div>
+
+<table>
+    <tr><th>Vehicle Type</th><th>Fuel Consumption</th><th>Typical Annual km (varies by country)</th></tr>
+    <tr><td>Car</td><td>0.08 L/km</td><td>10,000–20,000 km</td></tr>
+    <tr><td>Van</td><td>0.12 L/km</td><td>15,000–25,000 km</td></tr>
+    <tr><td>Truck</td><td>0.25 L/km</td><td>30,000–50,000 km</td></tr>
+</table>
+
+<p>Annual km varies by country (e.g., US 20,000 km for cars, Japan 10,000 km). Fleet efficiency rating applies the same multiplier as area-based equipment (old 1.35×, standard 1.0×, high-efficiency 0.70×) to the fuel consumption per km.</p>
+
+<h3>3.4 Fuel Emission Factors</h3>
+
+<table>
+    <tr><th>Fuel</th><th>EF (kgCO2e/unit)</th><th>Unit</th><th>Source</th></tr>
+    <tr><td>Natural Gas</td><td>2.02</td><td>per m³</td><td><span class="source-tag">IPCC 2006 Vol.2 Ch.2</span></td></tr>
+    <tr><td>Diesel</td><td>2.68</td><td>per litre</td><td><span class="source-tag">IPCC 2006 Vol.2 Ch.2</span></td></tr>
+    <tr><td>Gasoline</td><td>2.31</td><td>per litre</td><td><span class="source-tag">IPCC 2006 Vol.2 Ch.2</span></td></tr>
+    <tr><td>LPG</td><td>2.98</td><td>per kg</td><td><span class="source-tag">IPCC 2006 Vol.2 Ch.2</span></td></tr>
+    <tr><td>Fuel Oil (heavy)</td><td>3.15</td><td>per litre</td><td><span class="source-tag">IPCC 2006 Vol.2 Ch.2</span></td></tr>
+</table>
+
+<p>All fuel EFs include CO2, CH4, and N2O (expressed as CO2-equivalent). Values cross-referenced against UK DESNZ GHG Conversion Factors 2024 — within 2% of IPCC defaults.</p>
+
+<h3>3.5 Fuel Type Assignment</h3>
+
+<p>The fuel type for each equipment item is inferred from the country's default fuel mix. For example:</p>
+<ul>
+    <li>India: Cooking uses LPG; furnaces use fuel oil</li>
+    <li>US: Cooking uses natural gas; fleet vans use gasoline</li>
+    <li>France/Germany: Fleet cars use diesel</li>
+    <li>Indonesia: Boilers and furnaces use fuel oil</li>
+</ul>
+
+<h2>4. Uncertainty Range</h2>
+
+<p>Every estimate includes a low–mid–high range. The mid estimate is the benchmark calculation. Low and high are derived from facility-type-specific uncertainty factors:</p>
+
+<div class="formula">
+    Low Estimate = Mid Estimate × Low Factor<br>
+    High Estimate = Mid Estimate × High Factor
+</div>
+
+<table>
+    <tr><th>Facility Type</th><th>Low Factor</th><th>High Factor</th><th>Rationale</th></tr>
+    <tr><td>Office</td><td>0.65</td><td>1.45</td><td>Moderate variation — occupancy, IT load, HVAC efficiency</td></tr>
+    <tr><td>Retail</td><td>0.60</td><td>1.50</td><td>Varies with opening hours, refrigeration, display lighting</td></tr>
+    <tr><td>Warehouse</td><td>0.55</td><td>1.60</td><td>Wide range — cold storage vs. ambient, automation level</td></tr>
+    <tr><td>Light Manufacturing</td><td>0.50</td><td>1.70</td><td>Process loads vary greatly by sub-industry</td></tr>
+    <tr><td>Heavy Manufacturing</td><td>0.45</td><td>1.80</td><td>Widest range — process energy dominates, highly variable</td></tr>
+    <tr><td>Restaurant</td><td>0.60</td><td>1.50</td><td>Cooking intensity, ventilation, hours of operation</td></tr>
+    <tr><td>Hospital</td><td>0.70</td><td>1.35</td><td>Narrowest range — 24/7 operation, regulated environments</td></tr>
+    <tr><td>Hotel</td><td>0.65</td><td>1.45</td><td>Occupancy rate, amenities (pool, spa), star rating</td></tr>
+    <tr><td>Residential</td><td>0.55</td><td>1.60</td><td>Occupant behavior, appliance age, insulation quality</td></tr>
+    <tr><td>School</td><td>0.65</td><td>1.45</td><td>Term-time vs. holidays, lab/gym facilities</td></tr>
+</table>
+
+<p>These ranges are derived from the distribution of EUI values in CBECS (US Commercial Buildings Energy Consumption Survey) and CIBSE TM46 (UK), representing approximately the 10th to 90th percentile.</p>
+
+<h2>5. Climate Data</h2>
+
+<h3>5.1 City-Level HDD/CDD</h3>
+
+<p>When a city is selected, the estimator uses annual Heating Degree Days (HDD, base 18°C) and Cooling Degree Days (CDD, base 18°C) for precise climate characterization. The dataset covers ~400 cities across 110 regions in 19 G20 countries.</p>
+
+<p><strong>Sources:</strong> ASHRAE Weather Data, BizEE Degree Days, World Meteorological Organization normals.</p>
+
+<h3>5.2 Fallback: ASHRAE Climate Zones</h3>
+
+<p>If no city is selected, the estimator maps the region to an ASHRAE climate zone (1–8) and looks up EUI from a pre-computed table. Zone 1 = very hot tropical, Zone 8 = subarctic.</p>
+
+<h2>6. Benchmark Comparison</h2>
+
+<p>The dashboard compares the estimated emissions intensity (kgCO2e/m²/yr) against:</p>
+<ul>
+    <li><strong>Average</strong> — typical for that facility type and climate zone</li>
+    <li><strong>Good Practice</strong> — 60% of the average (approximating the 25th percentile)</li>
+</ul>
+
+<h2>7. What This Estimator Does NOT Cover</h2>
+
+<ul>
+    <li><strong>Scope 3</strong> — supply chain emissions, employee commuting, purchased goods, waste disposal</li>
+    <li><strong>Market-based Scope 2</strong> — renewable energy certificates (RECs), green tariffs, PPAs</li>
+    <li><strong>Refrigerant leakage</strong> — fugitive HFC/CFC emissions from HVAC and refrigeration</li>
+    <li><strong>Process emissions</strong> — non-combustion industrial emissions (e.g., cement calcination, chemical reactions)</li>
+    <li><strong>District heating/cooling</strong> — centralized thermal energy not from on-site combustion</li>
+    <li><strong>Countries outside the G20</strong></li>
+</ul>
+
+<h2>8. Data Sources Summary</h2>
+
+<table>
+    <tr><th>Data</th><th>Primary Source</th><th>Year</th></tr>
+    <tr><td>Grid emission factors</td><td>CEA (India), EPA eGRID (US), DESNZ (UK), EEA (EU), Ember, IEA</td><td>2022–2024</td></tr>
+    <tr><td>Fuel emission factors</td><td>IPCC 2006 Guidelines, Vol. 2, Ch. 2</td><td>2006 (standard)</td></tr>
+    <tr><td>EUI benchmarks</td><td>CBECS (US), CIBSE TM46 (UK), BEE (India), ASHRAE 90.1</td><td>2018–2023</td></tr>
+    <tr><td>Equipment fuel benchmarks</td><td>CBECS, CIBSE Guide F, industry engineering references</td><td>2018–2023</td></tr>
+    <tr><td>HDD/CDD data</td><td>ASHRAE Weather Data, BizEE, WMO climate normals</td><td>1991–2020 averages</td></tr>
+    <tr><td>Vehicle fuel consumption</td><td>IEA Transport, country transport agencies</td><td>2022–2023</td></tr>
+    <tr><td>Benchmark comparisons</td><td>Derived from EUI × global average grid EF (~0.45 kgCO2e/kWh)</td><td>Synthetic</td></tr>
+</table>
+
+<h2>9. How to Improve Your Estimate</h2>
+
+<ol>
+    <li><strong>Select your city</strong> — city-level HDD/CDD gives much better results than regional averages</li>
+    <li><strong>Set building age accurately</strong> — this is the single biggest adjustment factor</li>
+    <li><strong>Set equipment efficiency</strong> — a condensing boiler vs. an old cast-iron boiler changes Scope 1 by ~50%</li>
+    <li><strong>Use custom EUI if you know it</strong> — if you have your actual electricity consumption, divide by floor area to get your real EUI, and enter it to override the benchmark</li>
+    <li><strong>Review and edit assumptions</strong> — Step 4 shows all calculated values and lets you override any of them</li>
+</ol>
+
+<p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e5e5ea; color: #8e8e93; font-size: 0.8rem;">
+    All data files and calculation logic are open source. See <code>data/</code> for JSON data files and <code>js/calculator.js</code> for formulas.
+</p>
+
+</div>
+</body>
+</html>
