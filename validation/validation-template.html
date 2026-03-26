@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation — Oren Carbon Emission Estimator</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #1a1a2e;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+        /* Header */
+        .header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+        .header img { height: 44px; }
+        .header h1 { font-size: 1.5rem; }
+        .header p { font-size: 0.82rem; color: #8e8e93; }
+
+        /* Intro */
+        .intro { background: #fff; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 4px #00000010; }
+        .intro h2 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .intro p { font-size: 0.9rem; color: #333; margin-bottom: 0.5rem; }
+        .intro ol { padding-left: 1.25rem; font-size: 0.88rem; }
+        .intro li { margin-bottom: 0.35rem; }
+
+        /* Form */
+        .facility-form { background: #fff; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 4px #00000010; }
+        .facility-form h3 { font-size: 1rem; margin-bottom: 1rem; color: #2E7D32; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1.5rem; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: 1 / -1; }
+        label { font-size: 0.8rem; font-weight: 500; color: #636366; margin-bottom: 0.2rem; }
+        input, select { padding: 0.55rem 0.7rem; border: 1.5px solid #d1d1d6; border-radius: 6px; font-size: 0.9rem; }
+        input:focus, select:focus { outline: none; border-color: #5B8DEF; box-shadow: 0 0 0 3px #5B8DEF22; }
+        small { font-size: 0.72rem; color: #8e8e93; margin-top: 0.15rem; }
+        .section-label { font-size: 0.85rem; font-weight: 600; color: #1a1a2e; margin-top: 0.75rem; margin-bottom: 0.25rem; grid-column: 1 / -1; border-top: 1px solid #e5e5ea; padding-top: 0.75rem; }
+
+        /* Buttons */
+        .btn { padding: 0.6rem 1.25rem; border: none; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-weight: 500; }
+        .btn-primary { background: #5B8DEF; color: #fff; }
+        .btn-primary:hover { background: #4A7BD4; }
+        .btn-secondary { background: #f2f2f7; color: #1a1a2e; border: 1.5px solid #d1d1d6; }
+        .btn-success { background: #2E7D32; color: #fff; }
+        .btn-success:hover { background: #256828; }
+        .btn-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+
+        /* Results table */
+        .results { background: #fff; border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 1px 4px #00000010; }
+        .results h2 { font-size: 1.15rem; margin-bottom: 1rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        th, td { padding: 0.5rem 0.6rem; text-align: left; border-bottom: 1px solid #e5e5ea; }
+        th { color: #636366; font-weight: 600; background: #f8f9fa; }
+        .error-good { color: #2E7D32; font-weight: 600; }
+        .error-ok { color: #F57F17; font-weight: 600; }
+        .error-bad { color: #BF360C; font-weight: 600; }
+        .total-row { background: #f2f2f7; font-weight: 600; }
+
+        /* Summary stats */
+        .summary-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        .stat-card { background: #f8f9fa; border-radius: 10px; padding: 1rem; text-align: center; }
+        .stat-number { font-size: 1.8rem; font-weight: 700; }
+        .stat-label { font-size: 0.75rem; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-good .stat-number { color: #2E7D32; }
+        .stat-ok .stat-number { color: #F57F17; }
+        .stat-bad .stat-number { color: #BF360C; }
+
+        /* Verdict */
+        .verdict { padding: 1.25rem; border-radius: 10px; margin-top: 1rem; text-align: center; }
+        .verdict-pass { background: #E8F5E9; border: 2px solid #81C784; }
+        .verdict-partial { background: #FFF8E1; border: 2px solid #FFD54F; }
+        .verdict-fail { background: #FBE9E7; border: 2px solid #FFAB91; }
+        .verdict h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .verdict p { font-size: 0.85rem; }
+
+        /* Export */
+        .export-section { margin-top: 1.5rem; text-align: center; }
+
+        /* Print */
+        @media print {
+            body { background: #fff; }
+            .btn, .btn-row, .facility-form, .export-section { display: none; }
+            .container { max-width: 100%; padding: 1rem; }
+            .results, .intro { box-shadow: none; border: 1px solid #e5e5ea; }
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .summary-stats { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <img src="../svg/oren-logo.png" alt="Oren" />
+        <div>
+            <h1>Estimator Validation</h1>
+            <p>Compare estimated emissions against actual metered data</p>
+        </div>
+    </div>
+
+    <div class="intro">
+        <h2>How to Use This Template</h2>
+        <p>For each client facility where you have actual electricity bills and/or fuel consumption data:</p>
+        <ol>
+            <li><strong>Run the estimator</strong> at <a href="../index.html">index.html</a> for the facility and note the estimated kWh and tCO2e</li>
+            <li><strong>Enter both values below</strong> — the estimate from the tool and the actual from bills</li>
+            <li><strong>Click "Add Facility"</strong> to add it to the validation set</li>
+            <li>Repeat for 5-10 facilities across different types and locations</li>
+            <li>Review the accuracy statistics — median error under 25% is excellent for proxy-based estimation</li>
+        </ol>
+        <p style="font-size: 0.82rem; color: #636366; margin-top: 0.5rem;">All data stays in your browser (localStorage). Nothing is sent to any server.</p>
+    </div>
+
+    <div class="facility-form">
+        <h3>Add Facility Comparison</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="v-name">Facility Name</label>
+                <input type="text" id="v-name" placeholder="e.g., Client X Head Office" />
+            </div>
+            <div class="form-group">
+                <label for="v-type">Facility Type</label>
+                <select id="v-type">
+                    <option value="office">Office</option>
+                    <option value="retail">Retail / Shop</option>
+                    <option value="warehouse">Warehouse</option>
+                    <option value="light_manufacturing">Light Manufacturing</option>
+                    <option value="heavy_manufacturing">Heavy Manufacturing</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="hospital">Hospital / Clinic</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="residential">Residential</option>
+                    <option value="school">School / University</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="v-country">Country</label>
+                <input type="text" id="v-country" placeholder="e.g., India" />
+            </div>
+            <div class="form-group">
+                <label for="v-area">Floor Area (m²)</label>
+                <input type="number" id="v-area" min="1" placeholder="500" />
+            </div>
+
+            <div class="section-label">Estimated (from the tool)</div>
+
+            <div class="form-group">
+                <label for="v-est-kwh">Estimated Electricity (kWh/yr)</label>
+                <input type="number" id="v-est-kwh" min="0" placeholder="From Step 4 review" />
+                <small>From the estimator's Review step</small>
+            </div>
+            <div class="form-group">
+                <label for="v-est-tco2">Estimated Total (tCO2e/yr)</label>
+                <input type="number" id="v-est-tco2" min="0" step="0.01" placeholder="From dashboard" />
+                <small>Scope 1 + Scope 2 from dashboard</small>
+            </div>
+
+            <div class="section-label">Actual (from bills / metered data)</div>
+
+            <div class="form-group">
+                <label for="v-act-kwh">Actual Electricity (kWh/yr)</label>
+                <input type="number" id="v-act-kwh" min="0" placeholder="Sum of 12 monthly bills" />
+                <small>Annual total from electricity bills</small>
+            </div>
+            <div class="form-group">
+                <label for="v-act-tco2">Actual Total Emissions (tCO2e/yr)</label>
+                <input type="number" id="v-act-tco2" min="0" step="0.01" placeholder="If known, or leave blank" />
+                <small>If known from audit. If blank, we'll compute from actual kWh × grid EF</small>
+            </div>
+
+            <div class="form-group">
+                <label for="v-verified">Oren Verified?</label>
+                <select id="v-verified">
+                    <option value="yes">Yes — building age + equipment efficiency provided</option>
+                    <option value="no">No — used default assumptions</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="v-notes">Notes (optional)</label>
+                <input type="text" id="v-notes" placeholder="e.g., has on-site solar, old building" />
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn btn-success" id="add-facility">Add Facility</button>
+            <button class="btn btn-secondary" id="clear-all">Clear All Data</button>
+        </div>
+    </div>
+
+    <div class="results" id="results-section" style="display: none;">
+        <h2>Validation Results</h2>
+
+        <div class="summary-stats" id="summary-stats"></div>
+
+        <div id="verdict"></div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Facility</th>
+                    <th>Type</th>
+                    <th>Area (m²)</th>
+                    <th>Est. kWh</th>
+                    <th>Actual kWh</th>
+                    <th>kWh Error</th>
+                    <th>Est. tCO2e</th>
+                    <th>Actual tCO2e</th>
+                    <th>tCO2e Error</th>
+                    <th>Verified</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+        </table>
+
+        <div class="export-section">
+            <button class="btn btn-primary" id="export-csv">Download CSV</button>
+            <button class="btn btn-secondary" id="export-pdf">Print / Save PDF</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'oren_validation_data';
+
+function load() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch { return []; }
+}
+
+function save(data) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function pctError(est, actual) {
+    if (actual === 0) return est === 0 ? 0 : 100;
+    return ((est - actual) / actual) * 100;
+}
+
+function errorClass(pct) {
+    const abs = Math.abs(pct);
+    if (abs <= 25) return 'error-good';
+    if (abs <= 50) return 'error-ok';
+    return 'error-bad';
+}
+
+function render() {
+    const data = load();
+    const section = document.getElementById('results-section');
+    const body = document.getElementById('results-body');
+    const stats = document.getElementById('summary-stats');
+    const verdict = document.getElementById('verdict');
+
+    if (data.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = '';
+
+    // Build rows
+    body.innerHTML = data.map((f, i) => {
+        const kwhErr = pctError(f.estKwh, f.actKwh);
+        const tco2Err = f.actTco2 > 0 ? pctError(f.estTco2, f.actTco2) : null;
+        return `<tr>
+            <td>${esc(f.name)}</td>
+            <td>${esc(f.type)}</td>
+            <td>${f.area.toLocaleString()}</td>
+            <td>${f.estKwh.toLocaleString()}</td>
+            <td>${f.actKwh.toLocaleString()}</td>
+            <td class="${errorClass(kwhErr)}">${kwhErr >= 0 ? '+' : ''}${kwhErr.toFixed(1)}%</td>
+            <td>${f.estTco2.toFixed(2)}</td>
+            <td>${f.actTco2 > 0 ? f.actTco2.toFixed(2) : '—'}</td>
+            <td class="${tco2Err !== null ? errorClass(tco2Err) : ''}">${tco2Err !== null ? (tco2Err >= 0 ? '+' : '') + tco2Err.toFixed(1) + '%' : '—'}</td>
+            <td>${f.verified ? 'Yes' : 'No'}</td>
+            <td><button class="btn btn-secondary" style="padding:0.2rem 0.5rem;font-size:0.75rem;" onclick="remove(${i})">x</button></td>
+        </tr>`;
+    }).join('');
+
+    // Stats
+    const kwhErrors = data.map(f => Math.abs(pctError(f.estKwh, f.actKwh)));
+    const sorted = [...kwhErrors].sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    const mean = kwhErrors.reduce((a, b) => a + b, 0) / kwhErrors.length;
+    const within25 = kwhErrors.filter(e => e <= 25).length;
+    const within50 = kwhErrors.filter(e => e <= 50).length;
+
+    const medianClass = median <= 25 ? 'stat-good' : median <= 50 ? 'stat-ok' : 'stat-bad';
+
+    stats.innerHTML = `
+        <div class="stat-card ${medianClass}">
+            <div class="stat-number">${median.toFixed(0)}%</div>
+            <div class="stat-label">Median Error</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${mean.toFixed(0)}%</div>
+            <div class="stat-label">Mean Error</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${within25}/${data.length}</div>
+            <div class="stat-label">Within 25%</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">${within50}/${data.length}</div>
+            <div class="stat-label">Within 50%</div>
+        </div>
+    `;
+
+    // Verdict
+    let verdictClass, verdictTitle, verdictText;
+    if (data.length < 5) {
+        verdictClass = 'verdict-partial';
+        verdictTitle = 'Need More Data';
+        verdictText = `${data.length} of 5 minimum facilities added. Add ${5 - data.length} more for a meaningful validation.`;
+    } else if (median <= 25) {
+        verdictClass = 'verdict-pass';
+        verdictTitle = 'Excellent Accuracy';
+        verdictText = `Median error of ${median.toFixed(0)}% across ${data.length} facilities. This estimator produces reliable proxy-based estimates suitable for initial screening and benchmarking.`;
+    } else if (median <= 50) {
+        verdictClass = 'verdict-partial';
+        verdictTitle = 'Acceptable Accuracy';
+        verdictText = `Median error of ${median.toFixed(0)}% across ${data.length} facilities. Suitable for directional estimates. Consider using Oren Verified inputs (building age, equipment efficiency) to improve accuracy.`;
+    } else {
+        verdictClass = 'verdict-fail';
+        verdictTitle = 'Needs Improvement';
+        verdictText = `Median error of ${median.toFixed(0)}% across ${data.length} facilities. The estimator may need calibration for these facility types or regions. Check individual errors to identify patterns.`;
+    }
+
+    // Verified vs unverified comparison
+    const verifiedData = data.filter(f => f.verified);
+    const unverifiedData = data.filter(f => !f.verified);
+    let comparisonText = '';
+    if (verifiedData.length >= 2 && unverifiedData.length >= 2) {
+        const vErrors = verifiedData.map(f => Math.abs(pctError(f.estKwh, f.actKwh)));
+        const uvErrors = unverifiedData.map(f => Math.abs(pctError(f.estKwh, f.actKwh)));
+        const vMedian = [...vErrors].sort((a, b) => a - b)[Math.floor(vErrors.length / 2)];
+        const uvMedian = [...uvErrors].sort((a, b) => a - b)[Math.floor(uvErrors.length / 2)];
+        comparisonText = `<p style="margin-top:0.5rem;font-size:0.82rem;">Oren Verified median error: <strong>${vMedian.toFixed(0)}%</strong> (N=${verifiedData.length}) vs Unverified: <strong>${uvMedian.toFixed(0)}%</strong> (N=${unverifiedData.length})</p>`;
+    }
+
+    verdict.innerHTML = `
+        <div class="verdict ${verdictClass}">
+            <h3>${verdictTitle}</h3>
+            <p>${verdictText}</p>
+            ${comparisonText}
+        </div>
+    `;
+}
+
+function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+}
+
+window.remove = function(i) {
+    const data = load();
+    data.splice(i, 1);
+    save(data);
+    render();
+};
+
+document.getElementById('add-facility').addEventListener('click', () => {
+    const name = document.getElementById('v-name').value.trim();
+    const type = document.getElementById('v-type').value;
+    const country = document.getElementById('v-country').value.trim();
+    const area = parseFloat(document.getElementById('v-area').value) || 0;
+    const estKwh = parseFloat(document.getElementById('v-est-kwh').value) || 0;
+    const estTco2 = parseFloat(document.getElementById('v-est-tco2').value) || 0;
+    const actKwh = parseFloat(document.getElementById('v-act-kwh').value) || 0;
+    const actTco2 = parseFloat(document.getElementById('v-act-tco2').value) || 0;
+    const verified = document.getElementById('v-verified').value === 'yes';
+    const notes = document.getElementById('v-notes').value.trim();
+
+    if (!name || !area || !estKwh || !actKwh) {
+        alert('Please fill in at least: name, area, estimated kWh, and actual kWh.');
+        return;
+    }
+
+    const data = load();
+    data.push({ name, type, country, area, estKwh, estTco2, actKwh, actTco2, verified, notes, date: new Date().toISOString().slice(0, 10) });
+    save(data);
+
+    // Clear form
+    ['v-name', 'v-country', 'v-area', 'v-est-kwh', 'v-est-tco2', 'v-act-kwh', 'v-act-tco2', 'v-notes'].forEach(id => {
+        document.getElementById(id).value = '';
+    });
+
+    render();
+});
+
+document.getElementById('clear-all').addEventListener('click', () => {
+    if (confirm('Clear all validation data? This cannot be undone.')) {
+        localStorage.removeItem(STORAGE_KEY);
+        render();
+    }
+});
+
+document.getElementById('export-csv').addEventListener('click', () => {
+    const data = load();
+    if (!data.length) return;
+    let csv = 'Facility,Type,Country,Area (m2),Est kWh,Actual kWh,kWh Error %,Est tCO2e,Actual tCO2e,tCO2e Error %,Verified,Notes\n';
+    for (const f of data) {
+        const kwhErr = pctError(f.estKwh, f.actKwh).toFixed(1);
+        const tco2Err = f.actTco2 > 0 ? pctError(f.estTco2, f.actTco2).toFixed(1) : '';
+        csv += `"${f.name}","${f.type}","${f.country}",${f.area},${f.estKwh},${f.actKwh},${kwhErr},${f.estTco2},${f.actTco2 || ''},${tco2Err},${f.verified ? 'Yes' : 'No'},"${f.notes || ''}"\n`;
+    }
+
+    const kwhErrors = data.map(f => Math.abs(pctError(f.estKwh, f.actKwh)));
+    const sorted = [...kwhErrors].sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    csv += `\nSummary\nFacilities validated,${data.length}\nMedian absolute error,${median.toFixed(1)}%\n`;
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'oren-estimator-validation.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+document.getElementById('export-pdf').addEventListener('click', () => window.print());
+
+render();
+</script>
+
+</body>
+</html>
