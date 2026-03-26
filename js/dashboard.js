@@ -136,9 +136,9 @@ function buildDonutChart(sourceMap, totalKg) {
         const pct = totalKg > 0 ? (kg / totalKg * 100).toFixed(1) : '0.0';
         return `
             <div class="legend-item">
-                <span class="legend-swatch" style="background:${color}"></span>
+                <span class="legend-color" style="background:${color}"></span>
                 <span class="legend-label">${label}</span>
-                <span class="legend-value">${fmt(tonne)} t (${pct}%)</span>
+                <span class="legend-pct">${fmt(tonne)} t (${pct}%)</span>
             </div>
         `;
     }).join('');
@@ -239,26 +239,28 @@ function buildBenchmarkBars(facilities) {
         return `
             <div class="benchmark-facility">
                 ${facilityLabel}
-                <div class="benchmark-row">
-                    <span class="bench-label">Your estimate</span>
-                    <div class="bench-bar-wrap">
-                        <div class="bench-bar bench-bar--yours" style="width:${yourPct}%"></div>
+                <div class="bench-bar-group">
+                    <div class="bench-bar-row">
+                        <span class="bench-label">Your estimate</span>
+                        <div class="bench-bar-track">
+                            <div class="bench-bar yours" style="width:${yourPct}%"></div>
+                        </div>
+                        <span class="bench-value">${emissionsPerM2.toFixed(1)} kg/m²</span>
                     </div>
-                    <span class="bench-val">${emissionsPerM2.toFixed(1)} kg/m²</span>
-                </div>
-                <div class="benchmark-row">
-                    <span class="bench-label">Average</span>
-                    <div class="bench-bar-wrap">
-                        <div class="bench-bar bench-bar--avg" style="width:${avgPct}%"></div>
+                    <div class="bench-bar-row">
+                        <span class="bench-label">Average</span>
+                        <div class="bench-bar-track">
+                            <div class="bench-bar average" style="width:${avgPct}%"></div>
+                        </div>
+                        <span class="bench-value">${avgEmissionsPerM2.toFixed(1)} kg/m²</span>
                     </div>
-                    <span class="bench-val">${avgEmissionsPerM2.toFixed(1)} kg/m²</span>
-                </div>
-                <div class="benchmark-row">
-                    <span class="bench-label">Good practice</span>
-                    <div class="bench-bar-wrap">
-                        <div class="bench-bar bench-bar--good" style="width:${goodPct}%"></div>
+                    <div class="bench-bar-row">
+                        <span class="bench-label">Good practice</span>
+                        <div class="bench-bar-track">
+                            <div class="bench-bar good" style="width:${goodPct}%"></div>
+                        </div>
+                        <span class="bench-value">${goodPracticePerM2.toFixed(1)} kg/m²</span>
                     </div>
-                    <span class="bench-val">${goodPracticePerM2.toFixed(1)} kg/m²</span>
                 </div>
                 <p class="bench-diff ${diffClass}">${diffText}</p>
             </div>
@@ -419,13 +421,11 @@ export function renderDashboard(container, facilities, data) {
                     <span class="headline-unit">tCO2e / year</span>
                 </div>
                 <div class="headline-badges">
-                    <div class="scope-badge scope1-badge">
-                        <span class="badge-label">Scope 1</span>
-                        <span class="badge-value">${fmt(scope1Tonne)} tCO2e</span>
+                    <div class="badge scope1">
+                        <span>Scope 1: ${fmt(scope1Tonne)} tCO2e</span>
                     </div>
-                    <div class="scope-badge scope2-badge">
-                        <span class="badge-label">Scope 2</span>
-                        <span class="badge-value">${fmt(scope2Tonne)} tCO2e</span>
+                    <div class="badge scope2">
+                        <span>Scope 2: ${fmt(scope2Tonne)} tCO2e</span>
                     </div>
                 </div>
             </div>

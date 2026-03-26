@@ -146,10 +146,26 @@ function getLookups() {
         equipmentProfiles[key] = normalized;
     });
 
+    // eui-benchmarks.json stores { electricity, heating } objects per zone.
+    // calculator.js expects plain numbers (total EUI = electricity + heating).
+    // Flatten here so the calculator gets a single kWh/m²/yr number per zone.
+    const rawEuiBenchmarks = data.euiBenchmarks || {};
+    const euiBenchmarks = {};
+    Object.entries(rawEuiBenchmarks).forEach(([facilityType, zones]) => {
+        euiBenchmarks[facilityType] = {};
+        Object.entries(zones).forEach(([zone, val]) => {
+            if (typeof val === 'object' && val !== null) {
+                euiBenchmarks[facilityType][zone] = (val.electricity || 0) + (val.heating || 0);
+            } else {
+                euiBenchmarks[facilityType][zone] = val;
+            }
+        });
+    });
+
     return {
         climateZone,
         gridEF,
-        euiBenchmarks: data.euiBenchmarks || {},
+        euiBenchmarks,
         equipmentProfiles,
         fuelFactors,
         countryCode,
@@ -209,7 +225,7 @@ function renderProgressBar() {
         const item = document.createElement('div');
         item.className = 'progress-step';
         item.dataset.step = stepNum;
-        item.innerHTML = `<span class="progress-dot">${stepNum}</span><span class="progress-label">${label}</span>`;
+        item.innerHTML = `<span class="step-num">${stepNum}</span><span class="step-label">${label}</span>`;
         bar.appendChild(item);
     });
 
@@ -270,7 +286,7 @@ function renderStep1() {
             </div>
         </div>
         <div class="step-footer">
-            <button id="step1-next" class="btn btn-primary" disabled>Next &rarr;</button>
+            <button id="step1-next" class="btn-primary" disabled>Next &rarr;</button>
         </div>
     `;
 
@@ -362,11 +378,11 @@ function renderStep2() {
                 <label for="facility-area">Floor Area</label>
                 <div class="area-input-row">
                     <input type="number" id="facility-area" min="1" step="1" placeholder="0" />
-                    <button id="unit-toggle" class="btn btn-secondary" type="button">sq m</button>
+                    <button id="unit-toggle" class="btn-secondary" type="button">sq m</button>
                 </div>
             </div>
             <div class="form-group custom-eui-group">
-                <button id="custom-eui-toggle" class="btn btn-link" type="button">+ Custom EUI (advanced)</button>
+                <button id="custom-eui-toggle" class="btn-text" type="button">+ Custom EUI (advanced)</button>
                 <div id="custom-eui-section" class="hidden">
                     <label for="custom-eui-input">Custom Energy Use Intensity (kWh/m²/yr)</label>
                     <input type="number" id="custom-eui-input" min="1" step="1" placeholder="Leave blank to use benchmark" />
@@ -375,8 +391,8 @@ function renderStep2() {
             </div>
         </div>
         <div class="step-footer">
-            <button id="step2-back" class="btn btn-secondary">&larr; Back</button>
-            <button id="step2-next" class="btn btn-primary" disabled>Next &rarr;</button>
+            <button id="step2-back" class="btn-secondary">&larr; Back</button>
+            <button id="step2-next" class="btn-primary" disabled>Next &rarr;</button>
         </div>
     `;
 
@@ -467,11 +483,11 @@ function renderStep3() {
 
     const checkboxItems = Object.entries(EQUIPMENT_META).map(([key, meta]) => `
         <div class="equipment-item">
-            <label class="checkbox-label">
-                <input type="checkbox" class="equip-checkbox" data-key="${key}" />
-                <span class="equip-name">${meta.label}</span>
-                <span class="equip-desc">${meta.description}</span>
-            </label>
+            <input type="checkbox" class="equip-checkbox" data-key="${key}" />
+            <div class="eq-info">
+                <strong>${meta.label}</strong>
+                <span>${meta.description}</span>
+            </div>
         </div>
     `).join('');
 
@@ -489,15 +505,15 @@ function renderStep3() {
                 <h3>Fleet Vehicles</h3>
                 <p class="fleet-note">Enter the number of company-owned vehicles.</p>
                 <div class="fleet-inputs">
-                    <div class="form-group fleet-item">
+                    <div class="fleet-row">
                         <label for="fleet-car">Cars</label>
                         <input type="number" id="fleet-car" min="0" step="1" value="0" data-key="fleet_car" />
                     </div>
-                    <div class="form-group fleet-item">
+                    <div class="fleet-row">
                         <label for="fleet-van">Vans</label>
                         <input type="number" id="fleet-van" min="0" step="1" value="0" data-key="fleet_van" />
                     </div>
-                    <div class="form-group fleet-item">
+                    <div class="fleet-row">
                         <label for="fleet-truck">Trucks</label>
                         <input type="number" id="fleet-truck" min="0" step="1" value="0" data-key="fleet_truck" />
                     </div>
@@ -505,8 +521,8 @@ function renderStep3() {
             </div>
         </div>
         <div class="step-footer">
-            <button id="step3-back" class="btn btn-secondary">&larr; Back</button>
-            <button id="step3-next" class="btn btn-primary">Review Estimates &rarr;</button>
+            <button id="step3-back" class="btn-secondary">&larr; Back</button>
+            <button id="step3-next" class="btn-primary">Review Estimates &rarr;</button>
         </div>
     `;
 
@@ -553,8 +569,8 @@ function renderStep4() {
             <!-- Dynamically populated -->
         </div>
         <div class="step-footer">
-            <button id="step4-back" class="btn btn-secondary">&larr; Back</button>
-            <button id="step4-confirm" class="btn btn-primary">Looks Good &rarr;</button>
+            <button id="step4-back" class="btn-secondary">&larr; Back</button>
+            <button id="step4-confirm" class="btn-primary">Looks Good &rarr;</button>
         </div>
     `;
 
@@ -703,7 +719,13 @@ function bindStep4Buttons() {
 
         const facilityRecord = {
             ...currentFacility,
+            // Flatten result fields to top level so dashboard can access them directly
+            ...result,
+            // Keep area in sqm for dashboard display
+            area: toSqm(currentFacility.area, currentFacility.areaUnit),
             areaSqm: toSqm(currentFacility.area, currentFacility.areaUnit),
+            // Keep facilityType accessible as both .facilityType and .type
+            type: currentFacility.facilityType,
             location: { ...location },
             results: result,
             overrides: { ...appState.overrides }
@@ -734,12 +756,12 @@ function renderStep5() {
             <div class="action-card">
                 <h3>Add Another Facility</h3>
                 <p>Add another building or site to get a combined emissions picture.</p>
-                <button id="add-another-btn" class="btn btn-secondary">+ Add Another Facility</button>
+                <button id="add-another-btn" class="btn-secondary">+ Add Another Facility</button>
             </div>
             <div class="action-card">
                 <h3>View Results</h3>
                 <p>See the full emissions dashboard with charts and a breakdown.</p>
-                <button id="view-results-btn" class="btn btn-primary">View Results &rarr;</button>
+                <button id="view-results-btn" class="btn-primary">View Results &rarr;</button>
             </div>
         </div>
     `;
