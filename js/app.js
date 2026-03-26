@@ -10,7 +10,7 @@ function fromSqm(value, unit) { return unit === 'sqft' ? value / SQM_PER_SQFT : 
 // ── App State ────────────────────────────────────────────────────────────────
 export const appState = {
     currentStep: 1,
-    location: { country: null, region: null },
+    location: { country: null, region: null, city: null },
     currentFacility: {
         name: '',
         facilityType: null,
@@ -70,7 +70,8 @@ async function loadData() {
         { file: 'emission-factors.json',   key: 'emissionFactors' },
         { file: 'fuel-factors.json',       key: 'fuelFactors' },
         { file: 'eui-benchmarks.json',     key: 'euiBenchmarks' },
-        { file: 'equipment-profiles.json', key: 'equipmentProfiles' }
+        { file: 'equipment-profiles.json', key: 'equipmentProfiles' },
+        { file: 'cities-hdd-cdd.json',    key: 'citiesHddCdd' }
     ];
 
     const results = await Promise.all(
@@ -170,6 +171,27 @@ function getLookups() {
         });
     });
 
+    // HDD/CDD: city-level lookup for precise climate calculation
+    let hdd = null;
+    let cdd = null;
+    const citiesData = data.citiesHddCdd || {};
+    const regionCities = citiesData[regionCode];
+    if (regionCities) {
+        const selectedCity = location.city;
+        if (selectedCity && regionCities.cities) {
+            const cityData = regionCities.cities.find(c => c.name === selectedCity);
+            if (cityData) {
+                hdd = cityData.hdd;
+                cdd = cityData.cdd;
+            }
+        }
+        // Fallback to region default
+        if (hdd == null && regionCities._default) {
+            hdd = regionCities._default.hdd;
+            cdd = regionCities._default.cdd;
+        }
+    }
+
     return {
         climateZone,
         gridEF,
@@ -178,7 +200,9 @@ function getLookups() {
         fuelFactors,
         countryCode,
         defaultFuelMix,
-        unitSystem
+        unitSystem,
+        hdd,
+        cdd
     };
 }
 
@@ -297,6 +321,13 @@ function renderStep1() {
                     <option value="">-- Select a region --</option>
                 </select>
             </div>
+            <div class="form-group" id="city-group" style="display:none;">
+                <label for="city-select">City (for precise climate data)</label>
+                <select id="city-select">
+                    <option value="">-- Use regional average --</option>
+                </select>
+                <small>Optional — selecting a city uses local HDD/CDD data for more accurate estimates.</small>
+            </div>
         </div>
         <div class="step-footer">
             <button id="step1-next" class="btn-primary" disabled>Next &rarr;</button>
@@ -347,10 +378,36 @@ function bindStep1Events() {
         }
     });
 
+    const cityGroup  = document.getElementById('city-group');
+    const citySelect = document.getElementById('city-select');
+
     regionSelect.addEventListener('change', () => {
         const code = regionSelect.value;
         appState.location.region = code || null;
+        appState.location.city = null;
         nextBtn.disabled = !(appState.location.country && appState.location.region);
+
+        // Populate city dropdown if HDD/CDD data exists for this region
+        citySelect.innerHTML = '<option value="">-- Use regional average --</option>';
+        cityGroup.style.display = 'none';
+
+        if (code) {
+            const citiesData = appState.data.citiesHddCdd || {};
+            const regionCities = citiesData[code];
+            if (regionCities && regionCities.cities && regionCities.cities.length > 0) {
+                regionCities.cities.forEach(city => {
+                    const opt = document.createElement('option');
+                    opt.value = city.name;
+                    opt.textContent = `${city.name} (HDD: ${city.hdd}, CDD: ${city.cdd})`;
+                    citySelect.appendChild(opt);
+                });
+                cityGroup.style.display = '';
+            }
+        }
+    });
+
+    citySelect.addEventListener('change', () => {
+        appState.location.city = citySelect.value || null;
     });
 
     nextBtn.addEventListener('click', () => {

@@ -46,6 +46,53 @@ export function calculateScope2(facilityArea, eui, gridEF) {
     return { estimatedElectricity, emissions };
 }
 
+// ── HDD/CDD-based EUI calculation ──
+// Reference climate: zone 4 (mixed) ≈ HDD 2500, CDD 1000
+const REF_HDD = 2500;
+const REF_CDD = 1000;
+
+// Base electrical EUI (non-HVAC) by facility type in kWh/m2/yr
+// This is the plug/lighting/process load that doesn't vary with climate
+const BASE_ELECTRICAL = {
+    office: 65, retail: 75, warehouse: 25, light_manufacturing: 120,
+    heavy_manufacturing: 250, restaurant: 140, hospital: 150, hotel: 85,
+    residential: 30, school: 55
+};
+
+// Cooling coefficient: kWh per m2 per CDD
+const COOLING_COEFF = {
+    office: 0.045, retail: 0.050, warehouse: 0.015, light_manufacturing: 0.040,
+    heavy_manufacturing: 0.045, restaurant: 0.055, hospital: 0.060, hotel: 0.050,
+    residential: 0.025, school: 0.035
+};
+
+// Heating coefficient: kWh-equivalent per m2 per HDD (thermal, for Scope 1 boiler calc)
+const HEATING_COEFF = {
+    office: 0.035, retail: 0.030, warehouse: 0.020, light_manufacturing: 0.035,
+    heavy_manufacturing: 0.035, restaurant: 0.040, hospital: 0.050, hotel: 0.045,
+    residential: 0.040, school: 0.035
+};
+
+/**
+ * Calculate EUI from HDD/CDD instead of zone lookup.
+ * Returns total electrical EUI in kWh/m2/yr.
+ */
+export function calculateEUIFromHDDCDD(facilityType, hdd, cdd) {
+    const base = BASE_ELECTRICAL[facilityType] || 65;
+    const coolingCoeff = COOLING_COEFF[facilityType] || 0.04;
+    const coolingEUI = cdd * coolingCoeff;
+    return base + coolingEUI;
+}
+
+/**
+ * Calculate heating energy demand from HDD (used for boiler Scope 1 adjustment).
+ * Returns kWh-thermal per m2 per year.
+ */
+export function calculateHeatingDemand(facilityType, hdd) {
+    const coeff = HEATING_COEFF[facilityType] || 0.035;
+    return hdd * coeff;
+}
+
 /**
  * Calculate Scope 1 emissions from area-based equipment (boilers, generators, cooking, furnaces).
  * @param {number} facilityArea - Floor area in m²
@@ -101,14 +148,25 @@ export function calculateFacility(facility, lookups) {
         equipmentProfiles = {},
         fuelFactors = {},
         countryCode,
-        defaultFuelMix = {}
+        defaultFuelMix = {},
+        hdd = null,
+        cdd = null
     } = lookups;
 
     // ── Scope 2 ──
     let euiUsed = customEUI;
+    let euiMethod = 'custom';
     if (euiUsed == null) {
-        const zoneMap = euiBenchmarks[facilityType] || {};
-        euiUsed = (zoneMap[climateZone] || zoneMap['4'] || 80) * buildingAgeMultiplier;
+        if (hdd != null && cdd != null) {
+            // HDD/CDD-based calculation (more precise)
+            euiUsed = calculateEUIFromHDDCDD(facilityType, hdd, cdd) * buildingAgeMultiplier;
+            euiMethod = 'hdd_cdd';
+        } else {
+            // Fallback: zone-based lookup
+            const zoneMap = euiBenchmarks[facilityType] || {};
+            euiUsed = (zoneMap[climateZone] || zoneMap['4'] || 80) * buildingAgeMultiplier;
+            euiMethod = 'zone';
+        }
     }
     const gridEFUsed = gridEF;
     const scope2Result = calculateScope2(area, euiUsed, gridEFUsed);
@@ -175,8 +233,11 @@ export function calculateFacility(facility, lookups) {
         scope2Total: scope2Result.emissions,
         estimatedElectricity: scope2Result.estimatedElectricity,
         euiUsed,
+        euiMethod,
         gridEFUsed,
         climateZone,
+        hdd,
+        cdd,
         scope2Detail: scope2Result,
         scope1Breakdown,
         uncertainty: {

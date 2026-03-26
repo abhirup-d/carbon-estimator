@@ -1,0 +1,1063 @@
+{
+  "_metadata": {
+    "description": "Annual HDD and CDD (base 18°C) for major cities by region",
+    "lastUpdated": "2026-03-26",
+    "sources": "ASHRAE Weather Data, BizEE Degree Days, World Meteorological Organization",
+    "unit": "degree-days (°C·day), base 18°C"
+  },
+
+  "IN-MH": {
+    "cities": [
+      { "name": "Mumbai", "hdd": 0, "cdd": 3500 },
+      { "name": "Pune", "hdd": 50, "cdd": 2800 },
+      { "name": "Nagpur", "hdd": 30, "cdd": 3200 },
+      { "name": "Nashik", "hdd": 80, "cdd": 2500 }
+    ],
+    "_default": { "hdd": 20, "cdd": 3100 }
+  },
+
+  "IN-DL": {
+    "cities": [
+      { "name": "New Delhi", "hdd": 300, "cdd": 2500 },
+      { "name": "Gurgaon", "hdd": 280, "cdd": 2450 },
+      { "name": "Noida", "hdd": 290, "cdd": 2480 }
+    ],
+    "_default": { "hdd": 290, "cdd": 2480 }
+  },
+
+  "IN-KA": {
+    "cities": [
+      { "name": "Bengaluru", "hdd": 100, "cdd": 1600 },
+      { "name": "Mysuru", "hdd": 80, "cdd": 1700 },
+      { "name": "Hubballi", "hdd": 60, "cdd": 2200 },
+      { "name": "Mangaluru", "hdd": 0, "cdd": 3000 }
+    ],
+    "_default": { "hdd": 70, "cdd": 2000 }
+  },
+
+  "IN-TN": {
+    "cities": [
+      { "name": "Chennai", "hdd": 0, "cdd": 3600 },
+      { "name": "Coimbatore", "hdd": 20, "cdd": 2800 },
+      { "name": "Madurai", "hdd": 0, "cdd": 3300 },
+      { "name": "Tiruchirappalli", "hdd": 0, "cdd": 3400 }
+    ],
+    "_default": { "hdd": 5, "cdd": 3300 }
+  },
+
+  "IN-GJ": {
+    "cities": [
+      { "name": "Ahmedabad", "hdd": 100, "cdd": 3000 },
+      { "name": "Surat", "hdd": 20, "cdd": 3200 },
+      { "name": "Vadodara", "hdd": 80, "cdd": 2900 },
+      { "name": "Rajkot", "hdd": 70, "cdd": 2800 }
+    ],
+    "_default": { "hdd": 70, "cdd": 3000 }
+  },
+
+  "IN-UP": {
+    "cities": [
+      { "name": "Lucknow", "hdd": 400, "cdd": 2300 },
+      { "name": "Kanpur", "hdd": 380, "cdd": 2350 },
+      { "name": "Agra", "hdd": 320, "cdd": 2450 },
+      { "name": "Varanasi", "hdd": 350, "cdd": 2400 }
+    ],
+    "_default": { "hdd": 360, "cdd": 2370 }
+  },
+
+  "IN-RJ": {
+    "cities": [
+      { "name": "Jaipur", "hdd": 250, "cdd": 2700 },
+      { "name": "Jodhpur", "hdd": 150, "cdd": 3000 },
+      { "name": "Kota", "hdd": 200, "cdd": 2800 },
+      { "name": "Bikaner", "hdd": 180, "cdd": 3100 }
+    ],
+    "_default": { "hdd": 200, "cdd": 2900 }
+  },
+
+  "IN-WB": {
+    "cities": [
+      { "name": "Kolkata", "hdd": 50, "cdd": 3000 },
+      { "name": "Asansol", "hdd": 100, "cdd": 2800 },
+      { "name": "Siliguri", "hdd": 200, "cdd": 2200 }
+    ],
+    "_default": { "hdd": 80, "cdd": 2800 }
+  },
+
+  "IN-AP": {
+    "cities": [
+      { "name": "Visakhapatnam", "hdd": 0, "cdd": 3100 },
+      { "name": "Vijayawada", "hdd": 10, "cdd": 3300 },
+      { "name": "Guntur", "hdd": 10, "cdd": 3200 },
+      { "name": "Nellore", "hdd": 0, "cdd": 3400 }
+    ],
+    "_default": { "hdd": 5, "cdd": 3200 }
+  },
+
+  "IN-TS": {
+    "cities": [
+      { "name": "Hyderabad", "hdd": 50, "cdd": 2600 },
+      { "name": "Warangal", "hdd": 60, "cdd": 2700 },
+      { "name": "Nizamabad", "hdd": 70, "cdd": 2600 }
+    ],
+    "_default": { "hdd": 60, "cdd": 2630 }
+  },
+
+  "IN-KL": {
+    "cities": [
+      { "name": "Thiruvananthapuram", "hdd": 0, "cdd": 3000 },
+      { "name": "Kochi", "hdd": 0, "cdd": 3100 },
+      { "name": "Kozhikode", "hdd": 0, "cdd": 3000 },
+      { "name": "Thrissur", "hdd": 0, "cdd": 3000 }
+    ],
+    "_default": { "hdd": 0, "cdd": 3020 }
+  },
+
+  "IN-PB": {
+    "cities": [
+      { "name": "Ludhiana", "hdd": 550, "cdd": 2100 },
+      { "name": "Amritsar", "hdd": 600, "cdd": 2000 },
+      { "name": "Jalandhar", "hdd": 570, "cdd": 2050 }
+    ],
+    "_default": { "hdd": 570, "cdd": 2050 }
+  },
+
+  "IN-HR": {
+    "cities": [
+      { "name": "Faridabad", "hdd": 350, "cdd": 2400 },
+      { "name": "Gurgaon", "hdd": 340, "cdd": 2420 },
+      { "name": "Ambala", "hdd": 480, "cdd": 2100 },
+      { "name": "Karnal", "hdd": 460, "cdd": 2150 }
+    ],
+    "_default": { "hdd": 400, "cdd": 2270 }
+  },
+
+  "IN-OR": {
+    "cities": [
+      { "name": "Bhubaneswar", "hdd": 30, "cdd": 2900 },
+      { "name": "Cuttack", "hdd": 40, "cdd": 2850 },
+      { "name": "Rourkela", "hdd": 80, "cdd": 2700 }
+    ],
+    "_default": { "hdd": 50, "cdd": 2820 }
+  },
+
+  "IN-OTHER": {
+    "cities": [
+      { "name": "Patna (Bihar)", "hdd": 300, "cdd": 2600 },
+      { "name": "Indore (MP)", "hdd": 150, "cdd": 2500 },
+      { "name": "Bhopal (MP)", "hdd": 170, "cdd": 2400 },
+      { "name": "Guwahati (Assam)", "hdd": 200, "cdd": 2500 },
+      { "name": "Ranchi (Jharkhand)", "hdd": 200, "cdd": 2100 }
+    ],
+    "_default": { "hdd": 200, "cdd": 2420 }
+  },
+
+  "AU-NSW": {
+    "cities": [
+      { "name": "Sydney", "hdd": 700, "cdd": 600 },
+      { "name": "Newcastle", "hdd": 650, "cdd": 550 },
+      { "name": "Wollongong", "hdd": 600, "cdd": 580 },
+      { "name": "Canberra", "hdd": 1800, "cdd": 300 }
+    ],
+    "_default": { "hdd": 950, "cdd": 510 }
+  },
+
+  "AU-VIC": {
+    "cities": [
+      { "name": "Melbourne", "hdd": 1400, "cdd": 300 },
+      { "name": "Geelong", "hdd": 1350, "cdd": 280 },
+      { "name": "Ballarat", "hdd": 2000, "cdd": 150 },
+      { "name": "Bendigo", "hdd": 1600, "cdd": 350 }
+    ],
+    "_default": { "hdd": 1590, "cdd": 270 }
+  },
+
+  "AU-QLD": {
+    "cities": [
+      { "name": "Brisbane", "hdd": 200, "cdd": 1500 },
+      { "name": "Gold Coast", "hdd": 100, "cdd": 1700 },
+      { "name": "Cairns", "hdd": 0, "cdd": 3500 },
+      { "name": "Townsville", "hdd": 0, "cdd": 3200 }
+    ],
+    "_default": { "hdd": 75, "cdd": 2480 }
+  },
+
+  "AU-SA": {
+    "cities": [
+      { "name": "Adelaide", "hdd": 1200, "cdd": 700 },
+      { "name": "Mount Gambier", "hdd": 1900, "cdd": 200 },
+      { "name": "Port Augusta", "hdd": 1000, "cdd": 1100 }
+    ],
+    "_default": { "hdd": 1370, "cdd": 670 }
+  },
+
+  "AU-WA": {
+    "cities": [
+      { "name": "Perth", "hdd": 800, "cdd": 1000 },
+      { "name": "Fremantle", "hdd": 750, "cdd": 1050 },
+      { "name": "Geraldton", "hdd": 400, "cdd": 1600 },
+      { "name": "Broome", "hdd": 0, "cdd": 3800 }
+    ],
+    "_default": { "hdd": 490, "cdd": 1860 }
+  },
+
+  "AU-TAS": {
+    "cities": [
+      { "name": "Hobart", "hdd": 2400, "cdd": 80 },
+      { "name": "Launceston", "hdd": 2600, "cdd": 100 },
+      { "name": "Devonport", "hdd": 2300, "cdd": 70 }
+    ],
+    "_default": { "hdd": 2430, "cdd": 83 }
+  },
+
+  "AU-NT": {
+    "cities": [
+      { "name": "Darwin", "hdd": 0, "cdd": 4200 },
+      { "name": "Alice Springs", "hdd": 300, "cdd": 3000 },
+      { "name": "Katherine", "hdd": 0, "cdd": 4000 }
+    ],
+    "_default": { "hdd": 100, "cdd": 3730 }
+  },
+
+  "AU-ACT": {
+    "cities": [
+      { "name": "Canberra", "hdd": 1800, "cdd": 300 },
+      { "name": "Queanbeyan", "hdd": 1750, "cdd": 290 }
+    ],
+    "_default": { "hdd": 1775, "cdd": 295 }
+  },
+
+  "US-CAMX": {
+    "cities": [
+      { "name": "Los Angeles", "hdd": 600, "cdd": 700 },
+      { "name": "San Francisco", "hdd": 1100, "cdd": 100 },
+      { "name": "San Diego", "hdd": 400, "cdd": 500 },
+      { "name": "Sacramento", "hdd": 1000, "cdd": 1200 },
+      { "name": "Las Vegas", "hdd": 700, "cdd": 2800 }
+    ],
+    "_default": { "hdd": 760, "cdd": 1060 }
+  },
+
+  "US-ERCT": {
+    "cities": [
+      { "name": "Houston", "hdd": 800, "cdd": 2600 },
+      { "name": "Dallas", "hdd": 1200, "cdd": 2400 },
+      { "name": "San Antonio", "hdd": 600, "cdd": 2800 },
+      { "name": "Austin", "hdd": 700, "cdd": 2700 },
+      { "name": "Fort Worth", "hdd": 1100, "cdd": 2500 }
+    ],
+    "_default": { "hdd": 880, "cdd": 2600 }
+  },
+
+  "US-FRCC": {
+    "cities": [
+      { "name": "Miami", "hdd": 100, "cdd": 3800 },
+      { "name": "Orlando", "hdd": 250, "cdd": 3200 },
+      { "name": "Tampa", "hdd": 200, "cdd": 3300 },
+      { "name": "Jacksonville", "hdd": 500, "cdd": 2600 },
+      { "name": "Tallahassee", "hdd": 600, "cdd": 2400 }
+    ],
+    "_default": { "hdd": 330, "cdd": 3060 }
+  },
+
+  "US-MROE": {
+    "cities": [
+      { "name": "Milwaukee", "hdd": 4000, "cdd": 600 },
+      { "name": "Madison", "hdd": 4200, "cdd": 550 },
+      { "name": "Minneapolis", "hdd": 4500, "cdd": 500 },
+      { "name": "Green Bay", "hdd": 4400, "cdd": 450 }
+    ],
+    "_default": { "hdd": 4275, "cdd": 525 }
+  },
+
+  "US-MROW": {
+    "cities": [
+      { "name": "Chicago", "hdd": 3700, "cdd": 800 },
+      { "name": "Detroit", "hdd": 3800, "cdd": 700 },
+      { "name": "Indianapolis", "hdd": 3200, "cdd": 900 },
+      { "name": "Kansas City", "hdd": 2800, "cdd": 1300 },
+      { "name": "St. Louis", "hdd": 2600, "cdd": 1400 }
+    ],
+    "_default": { "hdd": 3220, "cdd": 1020 }
+  },
+
+  "US-NEWE": {
+    "cities": [
+      { "name": "Boston", "hdd": 3200, "cdd": 600 },
+      { "name": "Providence", "hdd": 3100, "cdd": 600 },
+      { "name": "Hartford", "hdd": 3300, "cdd": 700 },
+      { "name": "Portland (ME)", "hdd": 4000, "cdd": 350 }
+    ],
+    "_default": { "hdd": 3400, "cdd": 563 }
+  },
+
+  "US-NWPP": {
+    "cities": [
+      { "name": "Seattle", "hdd": 2500, "cdd": 100 },
+      { "name": "Portland (OR)", "hdd": 2200, "cdd": 200 },
+      { "name": "Boise", "hdd": 2800, "cdd": 900 },
+      { "name": "Spokane", "hdd": 3600, "cdd": 600 },
+      { "name": "Salt Lake City", "hdd": 3000, "cdd": 1000 }
+    ],
+    "_default": { "hdd": 2820, "cdd": 560 }
+  },
+
+  "US-RFCE": {
+    "cities": [
+      { "name": "New York City", "hdd": 2700, "cdd": 900 },
+      { "name": "Philadelphia", "hdd": 2500, "cdd": 1000 },
+      { "name": "Baltimore", "hdd": 2400, "cdd": 1100 },
+      { "name": "Washington DC", "hdd": 2200, "cdd": 1200 },
+      { "name": "Newark", "hdd": 2700, "cdd": 950 }
+    ],
+    "_default": { "hdd": 2500, "cdd": 1030 }
+  },
+
+  "US-RFCM": {
+    "cities": [
+      { "name": "Cleveland", "hdd": 3500, "cdd": 700 },
+      { "name": "Columbus", "hdd": 3100, "cdd": 900 },
+      { "name": "Pittsburgh", "hdd": 3300, "cdd": 700 },
+      { "name": "Akron", "hdd": 3400, "cdd": 650 }
+    ],
+    "_default": { "hdd": 3325, "cdd": 738 }
+  },
+
+  "US-RFCW": {
+    "cities": [
+      { "name": "Cincinnati", "hdd": 2800, "cdd": 1100 },
+      { "name": "Louisville", "hdd": 2700, "cdd": 1200 },
+      { "name": "Toledo", "hdd": 3600, "cdd": 700 }
+    ],
+    "_default": { "hdd": 3033, "cdd": 1000 }
+  },
+
+  "US-SRSO": {
+    "cities": [
+      { "name": "Atlanta", "hdd": 1600, "cdd": 1700 },
+      { "name": "Charlotte", "hdd": 1800, "cdd": 1400 },
+      { "name": "Nashville", "hdd": 2200, "cdd": 1300 },
+      { "name": "Birmingham", "hdd": 1500, "cdd": 1800 },
+      { "name": "New Orleans", "hdd": 600, "cdd": 2800 }
+    ],
+    "_default": { "hdd": 1540, "cdd": 1800 }
+  },
+
+  "US-OTHER": {
+    "cities": [
+      { "name": "Phoenix (AZ)", "hdd": 400, "cdd": 3700 },
+      { "name": "Denver (CO)", "hdd": 3000, "cdd": 900 },
+      { "name": "Honolulu (HI)", "hdd": 0, "cdd": 2200 },
+      { "name": "Anchorage (AK)", "hdd": 6200, "cdd": 50 },
+      { "name": "Albuquerque (NM)", "hdd": 2200, "cdd": 1400 }
+    ],
+    "_default": { "hdd": 2360, "cdd": 1650 }
+  },
+
+  "CA-BC": {
+    "cities": [
+      { "name": "Vancouver", "hdd": 2800, "cdd": 150 },
+      { "name": "Victoria", "hdd": 2600, "cdd": 100 },
+      { "name": "Kelowna", "hdd": 3200, "cdd": 600 },
+      { "name": "Prince George", "hdd": 5500, "cdd": 150 }
+    ],
+    "_default": { "hdd": 3525, "cdd": 250 }
+  },
+
+  "CA-AB": {
+    "cities": [
+      { "name": "Calgary", "hdd": 5100, "cdd": 100 },
+      { "name": "Edmonton", "hdd": 5500, "cdd": 200 },
+      { "name": "Lethbridge", "hdd": 4500, "cdd": 300 },
+      { "name": "Red Deer", "hdd": 5200, "cdd": 150 }
+    ],
+    "_default": { "hdd": 5075, "cdd": 188 }
+  },
+
+  "CA-SK": {
+    "cities": [
+      { "name": "Saskatoon", "hdd": 5600, "cdd": 400 },
+      { "name": "Regina", "hdd": 5700, "cdd": 350 },
+      { "name": "Prince Albert", "hdd": 6000, "cdd": 300 }
+    ],
+    "_default": { "hdd": 5767, "cdd": 350 }
+  },
+
+  "CA-MB": {
+    "cities": [
+      { "name": "Winnipeg", "hdd": 5800, "cdd": 500 },
+      { "name": "Brandon", "hdd": 5900, "cdd": 450 },
+      { "name": "Thompson", "hdd": 7200, "cdd": 200 }
+    ],
+    "_default": { "hdd": 6300, "cdd": 383 }
+  },
+
+  "CA-ON": {
+    "cities": [
+      { "name": "Toronto", "hdd": 3700, "cdd": 400 },
+      { "name": "Ottawa", "hdd": 4400, "cdd": 400 },
+      { "name": "Hamilton", "hdd": 3500, "cdd": 450 },
+      { "name": "London (ON)", "hdd": 3600, "cdd": 450 },
+      { "name": "Thunder Bay", "hdd": 5600, "cdd": 200 }
+    ],
+    "_default": { "hdd": 4160, "cdd": 380 }
+  },
+
+  "CA-QC": {
+    "cities": [
+      { "name": "Montreal", "hdd": 4400, "cdd": 300 },
+      { "name": "Quebec City", "hdd": 5000, "cdd": 250 },
+      { "name": "Sherbrooke", "hdd": 4800, "cdd": 250 },
+      { "name": "Trois-Rivieres", "hdd": 4600, "cdd": 280 }
+    ],
+    "_default": { "hdd": 4700, "cdd": 270 }
+  },
+
+  "CA-NS": {
+    "cities": [
+      { "name": "Halifax", "hdd": 3900, "cdd": 200 },
+      { "name": "Sydney (NS)", "hdd": 4100, "cdd": 200 },
+      { "name": "Truro", "hdd": 4000, "cdd": 200 }
+    ],
+    "_default": { "hdd": 4000, "cdd": 200 }
+  },
+
+  "CA-OTHER": {
+    "cities": [
+      { "name": "Fredericton (NB)", "hdd": 4500, "cdd": 300 },
+      { "name": "Charlottetown (PEI)", "hdd": 4300, "cdd": 250 },
+      { "name": "St. John's (NL)", "hdd": 4500, "cdd": 100 },
+      { "name": "Whitehorse (YT)", "hdd": 7500, "cdd": 50 }
+    ],
+    "_default": { "hdd": 5200, "cdd": 175 }
+  },
+
+  "CN-GD": {
+    "cities": [
+      { "name": "Guangzhou", "hdd": 50, "cdd": 2800 },
+      { "name": "Shenzhen", "hdd": 30, "cdd": 2900 },
+      { "name": "Dongguan", "hdd": 40, "cdd": 2850 },
+      { "name": "Foshan", "hdd": 50, "cdd": 2780 }
+    ],
+    "_default": { "hdd": 43, "cdd": 2833 }
+  },
+
+  "CN-SH": {
+    "cities": [
+      { "name": "Shanghai", "hdd": 1500, "cdd": 1200 },
+      { "name": "Suzhou", "hdd": 1550, "cdd": 1150 },
+      { "name": "Nanjing", "hdd": 1600, "cdd": 1300 }
+    ],
+    "_default": { "hdd": 1550, "cdd": 1217 }
+  },
+
+  "CN-BJ": {
+    "cities": [
+      { "name": "Beijing", "hdd": 2600, "cdd": 1100 },
+      { "name": "Tianjin", "hdd": 2700, "cdd": 1000 },
+      { "name": "Shijiazhuang", "hdd": 2400, "cdd": 1200 }
+    ],
+    "_default": { "hdd": 2567, "cdd": 1100 }
+  },
+
+  "CN-SD": {
+    "cities": [
+      { "name": "Jinan", "hdd": 2300, "cdd": 1300 },
+      { "name": "Qingdao", "hdd": 2100, "cdd": 900 },
+      { "name": "Zibo", "hdd": 2200, "cdd": 1200 },
+      { "name": "Yantai", "hdd": 2300, "cdd": 800 }
+    ],
+    "_default": { "hdd": 2225, "cdd": 1050 }
+  },
+
+  "CN-JS": {
+    "cities": [
+      { "name": "Nanjing", "hdd": 1600, "cdd": 1300 },
+      { "name": "Wuxi", "hdd": 1550, "cdd": 1200 },
+      { "name": "Xuzhou", "hdd": 1900, "cdd": 1300 },
+      { "name": "Changzhou", "hdd": 1580, "cdd": 1250 }
+    ],
+    "_default": { "hdd": 1658, "cdd": 1263 }
+  },
+
+  "CN-SC": {
+    "cities": [
+      { "name": "Chengdu", "hdd": 1000, "cdd": 800 },
+      { "name": "Chongqing", "hdd": 700, "cdd": 1400 },
+      { "name": "Mianyang", "hdd": 1100, "cdd": 700 },
+      { "name": "Nanchong", "hdd": 900, "cdd": 1100 }
+    ],
+    "_default": { "hdd": 925, "cdd": 1000 }
+  },
+
+  "CN-OTHER": {
+    "cities": [
+      { "name": "Wuhan (Hubei)", "hdd": 1400, "cdd": 1500 },
+      { "name": "Xi'an (Shaanxi)", "hdd": 2000, "cdd": 1100 },
+      { "name": "Shenyang (Liaoning)", "hdd": 3800, "cdd": 700 },
+      { "name": "Harbin (Heilongjiang)", "hdd": 5000, "cdd": 400 },
+      { "name": "Kunming (Yunnan)", "hdd": 600, "cdd": 300 }
+    ],
+    "_default": { "hdd": 2560, "cdd": 800 }
+  },
+
+  "GB-ENG": {
+    "cities": [
+      { "name": "London", "hdd": 2600, "cdd": 50 },
+      { "name": "Birmingham", "hdd": 2900, "cdd": 40 },
+      { "name": "Manchester", "hdd": 3000, "cdd": 30 },
+      { "name": "Leeds", "hdd": 3000, "cdd": 30 },
+      { "name": "Bristol", "hdd": 2700, "cdd": 50 }
+    ],
+    "_default": { "hdd": 2840, "cdd": 40 }
+  },
+
+  "GB-SCT": {
+    "cities": [
+      { "name": "Glasgow", "hdd": 3300, "cdd": 20 },
+      { "name": "Edinburgh", "hdd": 3200, "cdd": 20 },
+      { "name": "Aberdeen", "hdd": 3600, "cdd": 10 },
+      { "name": "Dundee", "hdd": 3300, "cdd": 15 }
+    ],
+    "_default": { "hdd": 3350, "cdd": 16 }
+  },
+
+  "GB-WLS": {
+    "cities": [
+      { "name": "Cardiff", "hdd": 2700, "cdd": 40 },
+      { "name": "Swansea", "hdd": 2600, "cdd": 40 },
+      { "name": "Newport", "hdd": 2700, "cdd": 40 }
+    ],
+    "_default": { "hdd": 2667, "cdd": 40 }
+  },
+
+  "GB-NIR": {
+    "cities": [
+      { "name": "Belfast", "hdd": 3000, "cdd": 20 },
+      { "name": "Londonderry", "hdd": 2900, "cdd": 15 }
+    ],
+    "_default": { "hdd": 2950, "cdd": 18 }
+  },
+
+  "DE-NW": {
+    "cities": [
+      { "name": "Cologne", "hdd": 3100, "cdd": 80 },
+      { "name": "Dusseldorf", "hdd": 3100, "cdd": 70 },
+      { "name": "Dortmund", "hdd": 3200, "cdd": 70 },
+      { "name": "Essen", "hdd": 3200, "cdd": 60 }
+    ],
+    "_default": { "hdd": 3150, "cdd": 70 }
+  },
+
+  "DE-BY": {
+    "cities": [
+      { "name": "Munich", "hdd": 3600, "cdd": 100 },
+      { "name": "Nuremberg", "hdd": 3400, "cdd": 150 },
+      { "name": "Augsburg", "hdd": 3500, "cdd": 120 }
+    ],
+    "_default": { "hdd": 3500, "cdd": 123 }
+  },
+
+  "DE-BW": {
+    "cities": [
+      { "name": "Stuttgart", "hdd": 3200, "cdd": 150 },
+      { "name": "Karlsruhe", "hdd": 3000, "cdd": 180 },
+      { "name": "Mannheim", "hdd": 3000, "cdd": 180 },
+      { "name": "Freiburg", "hdd": 2800, "cdd": 200 }
+    ],
+    "_default": { "hdd": 3000, "cdd": 178 }
+  },
+
+  "DE-OTHER": {
+    "cities": [
+      { "name": "Berlin", "hdd": 3200, "cdd": 100 },
+      { "name": "Hamburg", "hdd": 3300, "cdd": 70 },
+      { "name": "Frankfurt", "hdd": 3100, "cdd": 150 },
+      { "name": "Leipzig", "hdd": 3400, "cdd": 100 },
+      { "name": "Dresden", "hdd": 3300, "cdd": 110 }
+    ],
+    "_default": { "hdd": 3260, "cdd": 106 }
+  },
+
+  "FR-IDF": {
+    "cities": [
+      { "name": "Paris", "hdd": 2900, "cdd": 100 },
+      { "name": "Versailles", "hdd": 2950, "cdd": 90 },
+      { "name": "Boulogne-Billancourt", "hdd": 2900, "cdd": 100 }
+    ],
+    "_default": { "hdd": 2917, "cdd": 97 }
+  },
+
+  "FR-ARA": {
+    "cities": [
+      { "name": "Lyon", "hdd": 2700, "cdd": 300 },
+      { "name": "Grenoble", "hdd": 3000, "cdd": 250 },
+      { "name": "Clermont-Ferrand", "hdd": 2900, "cdd": 200 },
+      { "name": "Chambery", "hdd": 3100, "cdd": 200 }
+    ],
+    "_default": { "hdd": 2925, "cdd": 238 }
+  },
+
+  "FR-NAQ": {
+    "cities": [
+      { "name": "Bordeaux", "hdd": 2300, "cdd": 300 },
+      { "name": "Toulouse", "hdd": 2400, "cdd": 400 },
+      { "name": "Nantes", "hdd": 2600, "cdd": 150 },
+      { "name": "Limoges", "hdd": 2900, "cdd": 200 }
+    ],
+    "_default": { "hdd": 2550, "cdd": 263 }
+  },
+
+  "FR-OTHER": {
+    "cities": [
+      { "name": "Marseille", "hdd": 1800, "cdd": 600 },
+      { "name": "Nice", "hdd": 1400, "cdd": 700 },
+      { "name": "Strasbourg", "hdd": 3200, "cdd": 200 },
+      { "name": "Lille", "hdd": 3100, "cdd": 80 }
+    ],
+    "_default": { "hdd": 2375, "cdd": 395 }
+  },
+
+  "JP-13": {
+    "cities": [
+      { "name": "Tokyo", "hdd": 1600, "cdd": 800 },
+      { "name": "Yokohama", "hdd": 1550, "cdd": 800 },
+      { "name": "Kawasaki", "hdd": 1580, "cdd": 820 }
+    ],
+    "_default": { "hdd": 1577, "cdd": 807 }
+  },
+
+  "JP-27": {
+    "cities": [
+      { "name": "Osaka", "hdd": 1400, "cdd": 1000 },
+      { "name": "Kyoto", "hdd": 1600, "cdd": 950 },
+      { "name": "Kobe", "hdd": 1300, "cdd": 900 }
+    ],
+    "_default": { "hdd": 1433, "cdd": 950 }
+  },
+
+  "JP-23": {
+    "cities": [
+      { "name": "Nagoya", "hdd": 1700, "cdd": 900 },
+      { "name": "Toyota", "hdd": 1750, "cdd": 880 },
+      { "name": "Hamamatsu", "hdd": 1400, "cdd": 900 }
+    ],
+    "_default": { "hdd": 1617, "cdd": 893 }
+  },
+
+  "JP-01": {
+    "cities": [
+      { "name": "Sapporo", "hdd": 4100, "cdd": 200 },
+      { "name": "Hakodate", "hdd": 3700, "cdd": 250 },
+      { "name": "Asahikawa", "hdd": 5000, "cdd": 100 }
+    ],
+    "_default": { "hdd": 4267, "cdd": 183 }
+  },
+
+  "JP-OTHER": {
+    "cities": [
+      { "name": "Fukuoka", "hdd": 1200, "cdd": 1200 },
+      { "name": "Hiroshima", "hdd": 1600, "cdd": 900 },
+      { "name": "Sendai", "hdd": 2400, "cdd": 500 },
+      { "name": "Naha (Okinawa)", "hdd": 0, "cdd": 2500 }
+    ],
+    "_default": { "hdd": 1300, "cdd": 1275 }
+  },
+
+  "KR-11": {
+    "cities": [
+      { "name": "Seoul", "hdd": 2900, "cdd": 700 },
+      { "name": "Incheon", "hdd": 3000, "cdd": 650 }
+    ],
+    "_default": { "hdd": 2950, "cdd": 675 }
+  },
+
+  "KR-26": {
+    "cities": [
+      { "name": "Busan", "hdd": 1800, "cdd": 900 },
+      { "name": "Ulsan", "hdd": 1900, "cdd": 850 }
+    ],
+    "_default": { "hdd": 1850, "cdd": 875 }
+  },
+
+  "KR-28": {
+    "cities": [
+      { "name": "Incheon", "hdd": 3000, "cdd": 650 },
+      { "name": "Suwon", "hdd": 2900, "cdd": 700 }
+    ],
+    "_default": { "hdd": 2950, "cdd": 675 }
+  },
+
+  "KR-OTHER": {
+    "cities": [
+      { "name": "Daegu", "hdd": 2400, "cdd": 1000 },
+      { "name": "Daejeon", "hdd": 2700, "cdd": 800 },
+      { "name": "Gwangju", "hdd": 2300, "cdd": 900 },
+      { "name": "Jeju", "hdd": 1000, "cdd": 1200 }
+    ],
+    "_default": { "hdd": 2100, "cdd": 975 }
+  },
+
+  "BR-SP": {
+    "cities": [
+      { "name": "Sao Paulo", "hdd": 200, "cdd": 800 },
+      { "name": "Campinas", "hdd": 150, "cdd": 900 },
+      { "name": "Santos", "hdd": 50, "cdd": 1500 },
+      { "name": "Ribeirao Preto", "hdd": 100, "cdd": 1200 }
+    ],
+    "_default": { "hdd": 125, "cdd": 1100 }
+  },
+
+  "BR-RJ": {
+    "cities": [
+      { "name": "Rio de Janeiro", "hdd": 0, "cdd": 2000 },
+      { "name": "Niteroi", "hdd": 0, "cdd": 2000 },
+      { "name": "Petropolis", "hdd": 100, "cdd": 1000 }
+    ],
+    "_default": { "hdd": 33, "cdd": 1667 }
+  },
+
+  "BR-MG": {
+    "cities": [
+      { "name": "Belo Horizonte", "hdd": 100, "cdd": 1200 },
+      { "name": "Uberlandia", "hdd": 50, "cdd": 1500 },
+      { "name": "Contagem", "hdd": 100, "cdd": 1200 }
+    ],
+    "_default": { "hdd": 83, "cdd": 1300 }
+  },
+
+  "BR-RS": {
+    "cities": [
+      { "name": "Porto Alegre", "hdd": 500, "cdd": 800 },
+      { "name": "Caxias do Sul", "hdd": 800, "cdd": 500 },
+      { "name": "Pelotas", "hdd": 600, "cdd": 700 }
+    ],
+    "_default": { "hdd": 633, "cdd": 667 }
+  },
+
+  "BR-OTHER": {
+    "cities": [
+      { "name": "Salvador (Bahia)", "hdd": 0, "cdd": 2800 },
+      { "name": "Fortaleza (Ceara)", "hdd": 0, "cdd": 3200 },
+      { "name": "Manaus (Amazonas)", "hdd": 0, "cdd": 4000 },
+      { "name": "Brasilia (DF)", "hdd": 100, "cdd": 1200 },
+      { "name": "Recife (Pernambuco)", "hdd": 0, "cdd": 3000 }
+    ],
+    "_default": { "hdd": 20, "cdd": 2840 }
+  },
+
+  "IT-LOM": {
+    "cities": [
+      { "name": "Milan", "hdd": 2700, "cdd": 400 },
+      { "name": "Brescia", "hdd": 2600, "cdd": 450 },
+      { "name": "Bergamo", "hdd": 2800, "cdd": 380 },
+      { "name": "Monza", "hdd": 2700, "cdd": 400 }
+    ],
+    "_default": { "hdd": 2700, "cdd": 408 }
+  },
+
+  "IT-LAZ": {
+    "cities": [
+      { "name": "Rome", "hdd": 1800, "cdd": 700 },
+      { "name": "Latina", "hdd": 1600, "cdd": 800 },
+      { "name": "Frosinone", "hdd": 2000, "cdd": 600 }
+    ],
+    "_default": { "hdd": 1800, "cdd": 700 }
+  },
+
+  "IT-CAM": {
+    "cities": [
+      { "name": "Naples", "hdd": 1400, "cdd": 1000 },
+      { "name": "Salerno", "hdd": 1300, "cdd": 1100 },
+      { "name": "Caserta", "hdd": 1500, "cdd": 900 }
+    ],
+    "_default": { "hdd": 1400, "cdd": 1000 }
+  },
+
+  "IT-OTHER": {
+    "cities": [
+      { "name": "Turin (Piedmont)", "hdd": 2800, "cdd": 300 },
+      { "name": "Bologna (Emilia-R)", "hdd": 2500, "cdd": 500 },
+      { "name": "Florence (Tuscany)", "hdd": 2200, "cdd": 600 },
+      { "name": "Palermo (Sicily)", "hdd": 900, "cdd": 1500 }
+    ],
+    "_default": { "hdd": 2100, "cdd": 725 }
+  },
+
+  "ID-JK": {
+    "cities": [
+      { "name": "Jakarta", "hdd": 0, "cdd": 3800 },
+      { "name": "Bekasi", "hdd": 0, "cdd": 3700 },
+      { "name": "Tangerang", "hdd": 0, "cdd": 3750 }
+    ],
+    "_default": { "hdd": 0, "cdd": 3750 }
+  },
+
+  "ID-JW": {
+    "cities": [
+      { "name": "Surabaya", "hdd": 0, "cdd": 3600 },
+      { "name": "Bandung", "hdd": 0, "cdd": 2200 },
+      { "name": "Semarang", "hdd": 0, "cdd": 3500 },
+      { "name": "Yogyakarta", "hdd": 0, "cdd": 3000 }
+    ],
+    "_default": { "hdd": 0, "cdd": 3075 }
+  },
+
+  "ID-SU": {
+    "cities": [
+      { "name": "Medan", "hdd": 0, "cdd": 3900 },
+      { "name": "Palembang", "hdd": 0, "cdd": 3800 },
+      { "name": "Pekanbaru", "hdd": 0, "cdd": 3700 }
+    ],
+    "_default": { "hdd": 0, "cdd": 3800 }
+  },
+
+  "ID-KA": {
+    "cities": [
+      { "name": "Balikpapan", "hdd": 0, "cdd": 3900 },
+      { "name": "Banjarmasin", "hdd": 0, "cdd": 4000 },
+      { "name": "Samarinda", "hdd": 0, "cdd": 3900 }
+    ],
+    "_default": { "hdd": 0, "cdd": 3933 }
+  },
+
+  "ID-OTHER": {
+    "cities": [
+      { "name": "Makassar (Sulawesi)", "hdd": 0, "cdd": 3700 },
+      { "name": "Manado (Sulawesi)", "hdd": 0, "cdd": 3500 },
+      { "name": "Jayapura (Papua)", "hdd": 0, "cdd": 3600 }
+    ],
+    "_default": { "hdd": 0, "cdd": 3600 }
+  },
+
+  "MX-CMX": {
+    "cities": [
+      { "name": "Mexico City", "hdd": 600, "cdd": 600 },
+      { "name": "Ecatepec", "hdd": 650, "cdd": 550 },
+      { "name": "Nezahualcoyotl", "hdd": 620, "cdd": 580 }
+    ],
+    "_default": { "hdd": 623, "cdd": 577 }
+  },
+
+  "MX-JAL": {
+    "cities": [
+      { "name": "Guadalajara", "hdd": 400, "cdd": 1000 },
+      { "name": "Zapopan", "hdd": 420, "cdd": 980 },
+      { "name": "Puerto Vallarta", "hdd": 0, "cdd": 2800 }
+    ],
+    "_default": { "hdd": 273, "cdd": 1593 }
+  },
+
+  "MX-NLE": {
+    "cities": [
+      { "name": "Monterrey", "hdd": 500, "cdd": 2500 },
+      { "name": "San Nicolas de los Garza", "hdd": 500, "cdd": 2500 },
+      { "name": "Guadalupe (NL)", "hdd": 500, "cdd": 2500 }
+    ],
+    "_default": { "hdd": 500, "cdd": 2500 }
+  },
+
+  "MX-OTHER": {
+    "cities": [
+      { "name": "Puebla", "hdd": 700, "cdd": 700 },
+      { "name": "Tijuana (Baja)", "hdd": 700, "cdd": 700 },
+      { "name": "Cancun (Quintana Roo)", "hdd": 0, "cdd": 3500 },
+      { "name": "Veracruz", "hdd": 50, "cdd": 2800 }
+    ],
+    "_default": { "hdd": 363, "cdd": 1925 }
+  },
+
+  "TR-34": {
+    "cities": [
+      { "name": "Istanbul", "hdd": 2100, "cdd": 500 },
+      { "name": "Bursa", "hdd": 2300, "cdd": 600 },
+      { "name": "Kocaeli", "hdd": 2200, "cdd": 550 }
+    ],
+    "_default": { "hdd": 2200, "cdd": 550 }
+  },
+
+  "TR-06": {
+    "cities": [
+      { "name": "Ankara", "hdd": 3100, "cdd": 700 },
+      { "name": "Konya", "hdd": 2900, "cdd": 1000 },
+      { "name": "Kayseri", "hdd": 3200, "cdd": 800 }
+    ],
+    "_default": { "hdd": 3067, "cdd": 833 }
+  },
+
+  "TR-35": {
+    "cities": [
+      { "name": "Izmir", "hdd": 1400, "cdd": 1200 },
+      { "name": "Manisa", "hdd": 1600, "cdd": 1100 },
+      { "name": "Denizli", "hdd": 1700, "cdd": 1000 }
+    ],
+    "_default": { "hdd": 1567, "cdd": 1100 }
+  },
+
+  "TR-OTHER": {
+    "cities": [
+      { "name": "Antalya", "hdd": 700, "cdd": 1800 },
+      { "name": "Adana", "hdd": 600, "cdd": 2200 },
+      { "name": "Trabzon", "hdd": 2000, "cdd": 400 },
+      { "name": "Gaziantep", "hdd": 1800, "cdd": 1500 }
+    ],
+    "_default": { "hdd": 1275, "cdd": 1475 }
+  },
+
+  "AR-B": {
+    "cities": [
+      { "name": "Buenos Aires", "hdd": 800, "cdd": 600 },
+      { "name": "La Plata", "hdd": 850, "cdd": 550 },
+      { "name": "Mar del Plata", "hdd": 1200, "cdd": 300 }
+    ],
+    "_default": { "hdd": 950, "cdd": 483 }
+  },
+
+  "AR-C": {
+    "cities": [
+      { "name": "Buenos Aires (City)", "hdd": 800, "cdd": 600 },
+      { "name": "Floresta", "hdd": 800, "cdd": 600 }
+    ],
+    "_default": { "hdd": 800, "cdd": 600 }
+  },
+
+  "AR-X": {
+    "cities": [
+      { "name": "Cordoba", "hdd": 700, "cdd": 900 },
+      { "name": "Villa Carlos Paz", "hdd": 900, "cdd": 700 },
+      { "name": "Rio Cuarto", "hdd": 700, "cdd": 900 }
+    ],
+    "_default": { "hdd": 767, "cdd": 833 }
+  },
+
+  "AR-S": {
+    "cities": [
+      { "name": "Rosario", "hdd": 700, "cdd": 900 },
+      { "name": "Santa Fe", "hdd": 600, "cdd": 1000 },
+      { "name": "Rafaela", "hdd": 700, "cdd": 900 }
+    ],
+    "_default": { "hdd": 667, "cdd": 933 }
+  },
+
+  "AR-OTHER": {
+    "cities": [
+      { "name": "Mendoza", "hdd": 1100, "cdd": 900 },
+      { "name": "Tucuman", "hdd": 400, "cdd": 1500 },
+      { "name": "Salta", "hdd": 500, "cdd": 1200 },
+      { "name": "Bariloche (Patagonia)", "hdd": 2800, "cdd": 100 }
+    ],
+    "_default": { "hdd": 1200, "cdd": 925 }
+  },
+
+  "RU-MOW": {
+    "cities": [
+      { "name": "Moscow", "hdd": 4600, "cdd": 200 },
+      { "name": "Saint Petersburg", "hdd": 4700, "cdd": 150 },
+      { "name": "Nizhny Novgorod", "hdd": 4900, "cdd": 250 }
+    ],
+    "_default": { "hdd": 4733, "cdd": 200 }
+  },
+
+  "RU-SPE": {
+    "cities": [
+      { "name": "Saint Petersburg", "hdd": 4700, "cdd": 150 },
+      { "name": "Pskov", "hdd": 4400, "cdd": 150 },
+      { "name": "Novgorod", "hdd": 4600, "cdd": 180 }
+    ],
+    "_default": { "hdd": 4567, "cdd": 160 }
+  },
+
+  "RU-SIB": {
+    "cities": [
+      { "name": "Novosibirsk", "hdd": 6000, "cdd": 100 },
+      { "name": "Omsk", "hdd": 5800, "cdd": 150 },
+      { "name": "Krasnoyarsk", "hdd": 6200, "cdd": 100 },
+      { "name": "Irkutsk", "hdd": 6500, "cdd": 100 }
+    ],
+    "_default": { "hdd": 6125, "cdd": 113 }
+  },
+
+  "RU-OTHER": {
+    "cities": [
+      { "name": "Yekaterinburg (Urals)", "hdd": 5400, "cdd": 200 },
+      { "name": "Kazan (Volga)", "hdd": 5000, "cdd": 250 },
+      { "name": "Rostov-on-Don (South)", "hdd": 3000, "cdd": 600 },
+      { "name": "Vladivostok (Far East)", "hdd": 4500, "cdd": 300 }
+    ],
+    "_default": { "hdd": 4475, "cdd": 338 }
+  },
+
+  "SA-RD": {
+    "cities": [
+      { "name": "Riyadh", "hdd": 100, "cdd": 4000 },
+      { "name": "Al Kharj", "hdd": 80, "cdd": 4100 },
+      { "name": "Al-Dawadmi", "hdd": 150, "cdd": 3700 }
+    ],
+    "_default": { "hdd": 110, "cdd": 3933 }
+  },
+
+  "SA-MK": {
+    "cities": [
+      { "name": "Mecca", "hdd": 0, "cdd": 4500 },
+      { "name": "Jeddah", "hdd": 0, "cdd": 4200 },
+      { "name": "Medina", "hdd": 50, "cdd": 4300 }
+    ],
+    "_default": { "hdd": 17, "cdd": 4333 }
+  },
+
+  "SA-SH": {
+    "cities": [
+      { "name": "Dammam", "hdd": 100, "cdd": 3900 },
+      { "name": "Al Khobar", "hdd": 100, "cdd": 3900 },
+      { "name": "Dhahran", "hdd": 100, "cdd": 3900 },
+      { "name": "Al Jubail", "hdd": 80, "cdd": 3800 }
+    ],
+    "_default": { "hdd": 95, "cdd": 3875 }
+  },
+
+  "SA-OTHER": {
+    "cities": [
+      { "name": "Tabuk", "hdd": 400, "cdd": 2800 },
+      { "name": "Abha (Asir)", "hdd": 600, "cdd": 1000 },
+      { "name": "Buraidah (Qassim)", "hdd": 200, "cdd": 3500 }
+    ],
+    "_default": { "hdd": 400, "cdd": 2433 }
+  },
+
+  "ZA-GP": {
+    "cities": [
+      { "name": "Johannesburg", "hdd": 500, "cdd": 700 },
+      { "name": "Pretoria", "hdd": 400, "cdd": 800 },
+      { "name": "Soweto", "hdd": 500, "cdd": 700 }
+    ],
+    "_default": { "hdd": 467, "cdd": 733 }
+  },
+
+  "ZA-WC": {
+    "cities": [
+      { "name": "Cape Town", "hdd": 900, "cdd": 400 },
+      { "name": "Stellenbosch", "hdd": 800, "cdd": 500 },
+      { "name": "George", "hdd": 700, "cdd": 400 }
+    ],
+    "_default": { "hdd": 800, "cdd": 433 }
+  },
+
+  "ZA-KZN": {
+    "cities": [
+      { "name": "Durban", "hdd": 100, "cdd": 1800 },
+      { "name": "Pietermaritzburg", "hdd": 300, "cdd": 1200 },
+      { "name": "Richards Bay", "hdd": 50, "cdd": 2000 }
+    ],
+    "_default": { "hdd": 150, "cdd": 1667 }
+  },
+
+  "ZA-OTHER": {
+    "cities": [
+      { "name": "Port Elizabeth (EC)", "hdd": 600, "cdd": 600 },
+      { "name": "East London (EC)", "hdd": 400, "cdd": 800 },
+      { "name": "Bloemfontein (FS)", "hdd": 900, "cdd": 700 },
+      { "name": "Polokwane (LP)", "hdd": 300, "cdd": 1200 }
+    ],
+    "_default": { "hdd": 550, "cdd": 825 }
+  }
+}
