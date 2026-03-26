@@ -88,17 +88,17 @@
 </ul>
 
 <table>
-    <tr><th>Facility Type</th><th>Base Electrical (kWh/m²/yr)</th><th>Cooling Coeff. (kWh/m²/CDD)</th></tr>
-    <tr><td>Office</td><td>65</td><td>0.045</td></tr>
-    <tr><td>Retail / Shop</td><td>75</td><td>0.050</td></tr>
-    <tr><td>Warehouse</td><td>25</td><td>0.015</td></tr>
-    <tr><td>Light Manufacturing</td><td>120</td><td>0.040</td></tr>
-    <tr><td>Heavy Manufacturing</td><td>250</td><td>0.045</td></tr>
-    <tr><td>Restaurant</td><td>140</td><td>0.055</td></tr>
-    <tr><td>Hospital / Clinic</td><td>150</td><td>0.060</td></tr>
-    <tr><td>Hotel</td><td>85</td><td>0.050</td></tr>
-    <tr><td>Residential</td><td>30</td><td>0.025</td></tr>
-    <tr><td>School / University</td><td>55</td><td>0.035</td></tr>
+    <tr><th>Facility Type</th><th>Base Electrical (kWh/m²/yr)</th><th>Cooling Coeff. (kWh/m²/CDD)</th><th>CBECS Median (kWh/m²/yr)</th><th>CBECS N</th></tr>
+    <tr><td>Office</td><td>90</td><td>0.014</td><td>110 (cold zones: 90)</td><td>1,329</td></tr>
+    <tr><td>Retail / Shop</td><td>50</td><td>0.010</td><td>63</td><td>908</td></tr>
+    <tr><td>Warehouse</td><td>100</td><td>0.012</td><td>145</td><td>1,154</td></tr>
+    <tr><td>Light Manufacturing</td><td>130</td><td>0.015</td><td>~140 (estimated)</td><td>—</td></tr>
+    <tr><td>Heavy Manufacturing</td><td>260</td><td>0.015</td><td>~280 (estimated)</td><td>—</td></tr>
+    <tr><td>Restaurant</td><td>120</td><td>0.018</td><td>150</td><td>217</td></tr>
+    <tr><td>Hospital / Clinic</td><td>190</td><td>0.020</td><td>229</td><td>390</td></tr>
+    <tr><td>Hotel</td><td>120</td><td>0.016</td><td>148</td><td>418</td></tr>
+    <tr><td>Residential</td><td>35</td><td>0.010</td><td>~40 (RECS 2020)</td><td>—</td></tr>
+    <tr><td>School / University</td><td>50</td><td>0.010</td><td>64</td><td>752</td></tr>
 </table>
 
 <p><strong>Fallback method — Zone-based lookup:</strong> If no city is selected, the estimator falls back to ASHRAE climate zone-based EUI tables (zones 1–8). These are pre-computed from the HDD/CDD model at zone-representative values.</p>
@@ -245,7 +245,7 @@
     <tr><td>School</td><td>0.65</td><td>1.45</td><td>Term-time vs. holidays, lab/gym facilities</td></tr>
 </table>
 
-<p>These ranges are derived from the distribution of EUI values in CBECS (US Commercial Buildings Energy Consumption Survey) and CIBSE TM46 (UK), representing approximately the 10th to 90th percentile.</p>
+<p>These ranges are computed directly from the distribution of EUI values in the <strong>CBECS 2018 Public Use Microdata</strong> (EIA, 6,436 buildings). Low = P10/Median ratio, High = P90/Median ratio, using survey-weighted percentiles. For example, offices: P10 = 43.4, Median = 109.7, P90 = 266.4 → low factor = 0.40, high factor = 2.43.</p>
 
 <h2>5. Climate Data</h2>
 

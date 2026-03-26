@@ -6,17 +6,21 @@
 // the typical range of energy consumption for a given facility type,
 // driven by: building age, envelope quality, occupancy, operational hours.
 // Source: derived from CBECS/CIBSE distribution data (10th-90th percentile).
+// Uncertainty multipliers: P10/median and P90/median from CBECS 2018 microdata.
+// Source: EIA CBECS 2018 Public Use Microdata, weighted percentiles.
+// Residential uses RECS 2020 estimates (no CBECS data for residential).
+// Light/heavy manufacturing use CBECS "Service" and warehouse-adjacent data.
 const UNCERTAINTY = {
-    office:              { low: 0.65, high: 1.45 },
-    retail:              { low: 0.60, high: 1.50 },
-    warehouse:           { low: 0.55, high: 1.60 },
-    light_manufacturing: { low: 0.50, high: 1.70 },
-    heavy_manufacturing: { low: 0.45, high: 1.80 },
-    restaurant:          { low: 0.60, high: 1.50 },
-    hospital:            { low: 0.70, high: 1.35 },
-    hotel:               { low: 0.65, high: 1.45 },
-    residential:         { low: 0.55, high: 1.60 },
-    school:              { low: 0.65, high: 1.45 }
+    office:              { low: 0.40, high: 2.43 },  // CBECS N=1329, P10=43.4, P90=266.4
+    retail:              { low: 0.19, high: 6.93 },  // CBECS N=908, P10=11.9, P90=436.5
+    warehouse:           { low: 0.32, high: 4.28 },  // CBECS N=1154, P10=45.9, P90=621.6
+    light_manufacturing: { low: 0.35, high: 3.00 },  // Estimated from CBECS service/warehouse
+    heavy_manufacturing: { low: 0.30, high: 3.50 },  // Estimated from CBECS warehouse
+    restaurant:          { low: 0.48, high: 1.96 },  // CBECS N=217, P10=71.2, P90=293.5
+    hospital:            { low: 0.26, high: 2.03 },  // CBECS N=390, P10=59.4, P90=465.0
+    hotel:               { low: 0.37, high: 2.69 },  // CBECS N=418, P10=55.2, P90=397.3
+    residential:         { low: 0.45, high: 2.00 },  // RECS 2020 estimated
+    school:              { low: 0.27, high: 2.80 }   // CBECS N=752, P10=17.4, P90=177.8
 };
 
 // BENCHMARKS table removed — benchmark comparison now computed dynamically
@@ -40,19 +44,25 @@ export function calculateScope2(facilityArea, eui, gridEF) {
 const REF_HDD = 2500;
 const REF_CDD = 1000;
 
-// Base electrical EUI (non-HVAC) by facility type in kWh/m2/yr
-// This is the plug/lighting/process load that doesn't vary with climate
+// Base electrical EUI (non-HVAC) by facility type in kWh/m2/yr.
+// Validated against CBECS 2018 Public Use Microdata (EIA).
+// These represent the median EUI in cold/marine zones (minimal cooling),
+// isolating the non-HVAC base load. Cooling is added via CDD coefficient.
+// Source: EIA CBECS 2018, weighted median of cold-zone (zone 6) buildings.
 const BASE_ELECTRICAL = {
-    office: 65, retail: 75, warehouse: 25, light_manufacturing: 120,
-    heavy_manufacturing: 250, restaurant: 140, hospital: 150, hotel: 85,
-    residential: 30, school: 55
+    office: 90, retail: 50, warehouse: 100, light_manufacturing: 130,
+    heavy_manufacturing: 260, restaurant: 120, hospital: 190, hotel: 120,
+    residential: 35, school: 50
 };
 
-// Cooling coefficient: kWh per m2 per CDD
+// Cooling coefficient: kWh per m2 per CDD.
+// Calibrated from CBECS 2018: office hot-zone median (118.5) minus cold-zone
+// median (89.9) = 28.7 kWh/m2 difference over ~2000 CDD gap → ~0.014/CDD.
+// Other types scaled proportionally by their hot/cold ratios.
 const COOLING_COEFF = {
-    office: 0.045, retail: 0.050, warehouse: 0.015, light_manufacturing: 0.040,
-    heavy_manufacturing: 0.045, restaurant: 0.055, hospital: 0.060, hotel: 0.050,
-    residential: 0.025, school: 0.035
+    office: 0.014, retail: 0.010, warehouse: 0.012, light_manufacturing: 0.015,
+    heavy_manufacturing: 0.015, restaurant: 0.018, hospital: 0.020, hotel: 0.016,
+    residential: 0.010, school: 0.010
 };
 
 // Heating coefficient: kWh-equivalent per m2 per HDD (thermal, for Scope 1 boiler calc)

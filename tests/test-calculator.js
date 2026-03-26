@@ -88,11 +88,11 @@ section('Benchmark Comparison');
 const bench = getBenchmarkComparison(30000, 500, 'office', 0.82, 300, 2500, null, '2');
 assert('Benchmark: emissions per m2', bench.emissionsPerM2, 60);
 // Avg = EUI(office, HDD=300, CDD=2500) * 0.82
-// EUI = base(65) + CDD(2500)*coeff(0.045) = 65 + 112.5 = 177.5
-// avgEmissionsPerM2 = 177.5 * 0.82 = 145.55
-assert('Benchmark: avg uses actual grid EF', bench.avgEmissionsPerM2, 145.55, 2);
-// Good practice = 177.5 * 0.75 * 0.82 = 109.16
-assert('Benchmark: good practice = 0.75x avg EUI', bench.goodPracticePerM2, 109.16, 2);
+// EUI = base(90) + CDD(2500)*coeff(0.014) = 90 + 35 = 125
+// avgEmissionsPerM2 = 125 * 0.82 = 102.5
+assert('Benchmark: avg uses actual grid EF', bench.avgEmissionsPerM2, 102.5, 2);
+// Good practice = 125 * 0.75 * 0.82 = 76.875
+assert('Benchmark: good practice = 0.75x avg EUI', bench.goodPracticePerM2, 76.875, 2);
 
 // ── Summary ──
 results.innerHTML += `<div class="summary">${passed} passed, ${failed} failed</div>`;
