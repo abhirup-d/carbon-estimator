@@ -1,34 +1,42 @@
 {
-  "_comment": "Fuel emission factors in kgCO2e per unit. Source: IPCC 2006 Guidelines for National Greenhouse Gas Inventories. These are standard global values; no country overrides required.",
+  "_metadata": {
+    "description": "Fuel combustion emission factors in kgCO2e per unit (includes CO2, CH4, N2O)",
+    "lastUpdated": "2026-03-26",
+    "sources": {
+      "primary": "IPCC 2006 Guidelines for National Greenhouse Gas Inventories, Vol. 2, Chapter 2, Table 2.2-2.5 (default emission factors by fuel type)",
+      "crossReference": "UK DESNZ GHG Conversion Factors 2024 (fuel combustion section) — values within 2% of IPCC defaults",
+      "note": "These are globally standard values. Country-level variation in natural gas composition can cause ±5% differences, but IPCC defaults are accepted for estimation purposes."
+    }
+  },
 
   "natural_gas": {
     "unit": "m3",
     "unitLabel": "cubic metres",
     "default": 2.02,
-    "_comment": "kgCO2e per m3, IPCC 2006"
+    "_source": "IPCC 2006 Vol.2 Ch.2. Cross-ref: DESNZ 2024 = 2.02 kgCO2e/m3"
   },
   "diesel": {
     "unit": "litre",
     "unitLabel": "litres",
     "default": 2.68,
-    "_comment": "kgCO2e per litre, IPCC 2006"
+    "_source": "IPCC 2006 Vol.2 Ch.2. Cross-ref: DESNZ 2024 = 2.70 kgCO2e/L (gas oil), EPA = 2.68"
   },
   "gasoline": {
     "unit": "litre",
     "unitLabel": "litres",
     "default": 2.31,
-    "_comment": "kgCO2e per litre, IPCC 2006"
+    "_source": "IPCC 2006 Vol.2 Ch.2. Cross-ref: DESNZ 2024 = 2.31 kgCO2e/L"
   },
   "lpg": {
     "unit": "kg",
     "unitLabel": "kilograms",
     "default": 2.98,
-    "_comment": "kgCO2e per kg, IPCC 2006"
+    "_source": "IPCC 2006 Vol.2 Ch.2. Cross-ref: DESNZ 2024 = 2.94 kgCO2e/kg"
   },
   "fuel_oil": {
     "unit": "litre",
     "unitLabel": "litres",
     "default": 3.15,
-    "_comment": "kgCO2e per litre, IPCC 2006 (heavy fuel oil)"
+    "_source": "IPCC 2006 Vol.2 Ch.2 (heavy fuel oil / residual). Cross-ref: DESNZ 2024 = 3.18 kgCO2e/L"
   }
 }
