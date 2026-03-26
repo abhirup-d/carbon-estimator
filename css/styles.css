@@ -625,6 +625,15 @@ select:focus, input:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    font-family: inherit;
+    text-align: left;
 }
 
 .toggle-icon {
@@ -794,26 +803,102 @@ select:focus, input:focus {
 }
 
 /* ── Print styles for PDF export ── */
+/* ── Print-only elements ── */
+.print-only {
+    display: none !important;
+}
+
+.no-print {
+    /* visible on screen */
+}
+
 @media print {
-    #wizard-panel, #visual-panel, .btn-primary, .btn-secondary, .btn-text, .dash-export {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        background: #fff;
+        font-size: 11px;
+    }
+
+    #wizard-panel, #visual-panel, .no-print {
         display: none !important;
+    }
+
+    .print-only {
+        display: block !important;
+    }
+
+    #app {
+        display: block;
     }
 
     #dashboard {
         display: block !important;
+        grid-column: 1 / -1;
     }
 
     .dashboard-wrapper {
         padding: 0;
+        max-width: 100%;
+    }
+
+    /* Report header with Oren branding */
+    .report-header {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #2E7D32;
+    }
+
+    .report-footer {
+        margin-top: 2rem;
+    }
+
+    .dash-headline {
+        box-shadow: none;
+        border: 2px solid #e5e5ea;
+        page-break-inside: avoid;
     }
 
     .dash-card {
         box-shadow: none;
         border: 1px solid #e5e5ea;
         break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .dash-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
     .collapsed-content {
         max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .collapsible-icon {
+        display: none;
+    }
+
+    .verification-badge {
+        border-width: 2px;
+    }
+
+    .headline-number {
+        font-size: 2.5rem;
+    }
+
+    /* Clean table printing */
+    .facility-table, .assumptions-table {
+        font-size: 10px;
+    }
+
+    a[href]::after {
+        content: none;
     }
 }

@@ -322,12 +322,20 @@ function renderStep1() {
                     <option value="">-- Select a region --</option>
                 </select>
             </div>
-            <div class="form-group" id="city-group" style="display:none;">
-                <label for="city-select">City (for precise climate data)</label>
-                <select id="city-select">
-                    <option value="">-- Use regional average --</option>
-                </select>
-                <small>Optional — selecting a city uses local HDD/CDD data for more accurate estimates.</small>
+            <div id="city-group" style="display:none;">
+                <div class="oren-verified-section">
+                    <div class="oren-verified-prompt" id="city-prompt">
+                        <div class="oren-badge">Oren Verified</div>
+                        <span>Add your city for a more accurate, Oren-verified estimate</span>
+                        <button type="button" class="btn-text" id="show-city-select">+ Add</button>
+                    </div>
+                    <div class="form-group hidden" id="city-select-group">
+                        <label for="city-select">City</label>
+                        <select id="city-select">
+                            <option value="">-- Use regional average --</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="step-footer">
@@ -381,6 +389,14 @@ function bindStep1Events() {
 
     const cityGroup  = document.getElementById('city-group');
     const citySelect = document.getElementById('city-select');
+    const cityPrompt = document.getElementById('city-prompt');
+    const citySelectGroup = document.getElementById('city-select-group');
+    const showCityBtn = document.getElementById('show-city-select');
+
+    showCityBtn.addEventListener('click', () => {
+        cityPrompt.classList.add('hidden');
+        citySelectGroup.classList.remove('hidden');
+    });
 
     regionSelect.addEventListener('change', () => {
         const code = regionSelect.value;
@@ -388,9 +404,11 @@ function bindStep1Events() {
         appState.location.city = null;
         nextBtn.disabled = !(appState.location.country && appState.location.region);
 
-        // Populate city dropdown if HDD/CDD data exists for this region
+        // Reset city UI
         citySelect.innerHTML = '<option value="">-- Use regional average --</option>';
         cityGroup.style.display = 'none';
+        cityPrompt.classList.remove('hidden');
+        citySelectGroup.classList.add('hidden');
 
         if (code) {
             const citiesData = appState.data.citiesHddCdd || {};
@@ -399,7 +417,7 @@ function bindStep1Events() {
                 regionCities.cities.forEach(city => {
                     const opt = document.createElement('option');
                     opt.value = city.name;
-                    opt.textContent = `${city.name} (HDD: ${city.hdd}, CDD: ${city.cdd})`;
+                    opt.textContent = city.name;
                     citySelect.appendChild(opt);
                 });
                 cityGroup.style.display = '';

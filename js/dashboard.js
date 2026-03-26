@@ -425,9 +425,26 @@ export function renderDashboard(container, facilities, data) {
         ? `<div class="dash-card"><h3>Facility Breakdown</h3>${tableHTML}</div>`
         : '';
 
+    const reportDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
     container.innerHTML = `
         <div class="dashboard-wrapper">
-            <header class="dash-header">
+            <!-- Print-only report header -->
+            <div class="report-header print-only">
+                <div class="report-logo">
+                    <strong style="font-size: 1.4rem; color: #2E7D32;">Oren</strong>
+                    <span style="font-size: 0.75rem; color: #8e8e93; margin-left: 0.5rem;">by Maroon Oak Technologies</span>
+                </div>
+                <div class="report-title">
+                    <h1 style="font-size: 1.3rem; margin: 0;">Carbon Emission Estimate</h1>
+                    <p style="font-size: 0.8rem; color: #636366; margin: 0.15rem 0 0 0;">
+                        Report generated: ${reportDate} |
+                        Status: <strong style="color: ${allVerified ? '#2E7D32' : '#BF360C'}">${verificationLabel}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <header class="dash-header no-print">
                 <button id="back-to-wizard" class="btn-text">&larr; Add more facilities</button>
                 <h1>Your Carbon Footprint Estimate</h1>
             </header>
@@ -436,7 +453,7 @@ export function renderDashboard(container, facilities, data) {
                 <div class="verification-badge ${verificationClass}">
                     <span class="verification-icon">${allVerified ? '&#10003;' : '&#9888;'}</span>
                     <span>${verificationLabel}</span>
-                    <a href="methodology.html" target="_blank" class="verification-link">View methodology</a>
+                    <a href="methodology.html" target="_blank" class="verification-link no-print">View methodology</a>
                 </div>
                 <div class="headline-total">
                     <span class="headline-number">${fmt(totalTonne, 1)}</span>
@@ -481,7 +498,26 @@ export function renderDashboard(container, facilities, data) {
                 </div>
             </div>
 
-            <div class="dash-export">
+            <!-- Print-only footer -->
+            <div class="report-footer print-only">
+                <div style="border-top: 1px solid #e5e5ea; padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong style="color: #2E7D32;">Oren</strong> Carbon Emission Estimator
+                        <span style="color: #8e8e93;"> | </span>
+                        <span style="font-size: 0.75rem; color: #8e8e93;">Powered by open data from IPCC, IEA, CEA, EPA, DESNZ, EEA, Ember</span>
+                    </div>
+                    <div style="font-size: 0.75rem; color: #8e8e93;">
+                        www.orennow.com | Full methodology: methodology.html
+                    </div>
+                </div>
+                <p style="font-size: 0.7rem; color: #AEAEB2; margin-top: 0.5rem;">
+                    This estimate is based on facility characteristics and benchmark data. ${allVerified
+                        ? 'This is an Oren Verified estimate — building quality and equipment efficiency data were provided for enhanced accuracy.'
+                        : 'This is an unverified estimate — building quality and equipment efficiency data were not provided. Provide these for an Oren Verified estimate with higher accuracy.'}
+                </p>
+            </div>
+
+            <div class="dash-export no-print">
                 <button id="export-csv" class="btn-secondary">Download CSV</button>
                 <button id="export-pdf" class="btn-secondary">Download PDF</button>
                 <a href="methodology.html" target="_blank" class="btn-secondary" style="text-decoration:none;text-align:center;">Methodology</a>
