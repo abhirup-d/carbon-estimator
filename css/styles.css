@@ -1,3 +1,4 @@
+/* ── Reset & Base ── */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -9,8 +10,10 @@ body {
     color: #1a1a2e;
     background: #f8f9fa;
     min-height: 100vh;
+    line-height: 1.5;
 }
 
+/* ── Layout ── */
 #app {
     display: grid;
     grid-template-columns: 40% 60%;
@@ -18,19 +21,22 @@ body {
 }
 
 #wizard-panel {
-    padding: 2rem;
+    padding: 1.5rem 2rem 2rem;
     background: #ffffff;
     overflow-y: auto;
+    max-height: 100vh;
+    border-right: 1px solid #e5e5ea;
 }
 
 #visual-panel {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f0f2f5;
+    background: linear-gradient(135deg, #f0f2f5, #e8ecf1);
     position: sticky;
     top: 0;
     height: 100vh;
+    padding: 2rem;
 }
 
 #dashboard {
@@ -41,12 +47,614 @@ body {
     display: none !important;
 }
 
+/* ── Progress Bar ── */
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e5ea;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.progress-step.active,
+.progress-step.completed {
+    opacity: 1;
+}
+
+.step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e5e5ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.progress-step.active .step-num {
+    background: #5B8DEF;
+    color: #fff;
+}
+
+.progress-step.completed .step-num {
+    background: #34C759;
+    color: #fff;
+}
+
+.step-label {
+    font-size: 11px;
+    color: #8e8e93;
+}
+
+/* ── Wizard Steps ── */
+h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.step-desc {
+    color: #8e8e93;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #636366;
+    margin-bottom: 0.35rem;
+    margin-top: 1rem;
+}
+
+select, input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1.5px solid #d1d1d6;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #fff;
+    color: #1a1a2e;
+    transition: border-color 0.2s;
+    appearance: none;
+}
+
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%238e8e93' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2rem;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #5B8DEF;
+    box-shadow: 0 0 0 3px #5B8DEF22;
+}
+
+.area-input-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.area-input-row input {
+    flex: 1;
+}
+
+/* ── Buttons ── */
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #5B8DEF;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-top: 1.5rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #4A7BD4;
+    transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 0.65rem 1.25rem;
+    background: #f2f2f7;
+    color: #1a1a2e;
+    border: 1.5px solid #d1d1d6;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #e5e5ea;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: #5B8DEF;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 0.25rem 0;
+}
+
+.btn-text:hover {
+    text-decoration: underline;
+}
+
+.step-buttons {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* ── Equipment List ── */
+.equipment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.equipment-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid #e5e5ea;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-top: 0;
+}
+
+.equipment-item:hover {
+    border-color: #5B8DEF;
+    background: #5B8DEF08;
+}
+
+.equipment-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.eq-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.eq-info strong {
+    font-size: 0.9rem;
+}
+
+.eq-info span {
+    font-size: 0.78rem;
+    color: #8e8e93;
+}
+
+.fleet-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5ea;
+}
+
+.fleet-section h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+}
+
+.fleet-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.fleet-row label {
+    width: 60px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.fleet-row input {
+    width: 80px;
+    text-align: center;
+}
+
+/* ── Review Step ── */
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0 1rem;
+}
+
+.review-table td, .review-table th {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e5e5ea;
+    font-size: 0.85rem;
+}
+
+.review-table th {
+    text-align: left;
+    color: #8e8e93;
+    font-weight: 500;
+}
+
+.override-input {
+    width: 90px !important;
+    padding: 0.35rem 0.5rem !important;
+    font-size: 0.85rem !important;
+    display: inline;
+}
+
+.review-total {
+    background: #f2f2f7;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.review-note {
+    font-size: 0.8rem;
+    color: #8e8e93;
+    margin-top: 0.5rem;
+}
+
+.no-scope1 {
+    color: #8e8e93;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.review-section {
+    margin-bottom: 1rem;
+}
+
+.review-section h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ── Step 5 ── */
+.step5-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+/* ── Dashboard ── */
+.dashboard-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.dash-header {
+    margin-bottom: 1.5rem;
+}
+
+.dash-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.dash-headline {
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 1px 4px #00000010;
+    margin-bottom: 1.5rem;
+}
+
+.headline-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1;
+}
+
+.headline-unit {
+    font-size: 1rem;
+    color: #8e8e93;
+    margin-top: 0.25rem;
+}
+
+.headline-badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.badge {
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.badge.scope1 {
+    background: #FFF3E0;
+    color: #E65100;
+}
+
+.badge.scope2 {
+    background: #E3F2FD;
+    color: #1565C0;
+}
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.dash-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 4px #00000010;
+}
+
+.dash-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    color: #636366;
+}
+
+/* ── Donut Chart ── */
+.donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.legend-color {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.legend-pct {
+    margin-left: auto;
+    color: #8e8e93;
+}
+
+/* ── Facility Table ── */
+.facility-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+}
+
+.facility-table th, .facility-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e5ea;
+}
+
+.facility-table th {
+    color: #8e8e93;
+    font-weight: 500;
+}
+
+.total-row {
+    background: #f2f2f7;
+}
+
+/* ── Benchmark Bars ── */
+.benchmark-facility {
+    margin-bottom: 1.25rem;
+}
+
+.benchmark-facility h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.bench-bar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.bench-bar-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 100px;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bench-label {
+    font-size: 0.75rem;
+    color: #8e8e93;
+}
+
+.bench-bar-track {
+    height: 14px;
+    background: #f2f2f7;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.bench-bar {
+    height: 100%;
+    border-radius: 7px;
+    transition: width 0.6s ease;
+}
+
+.bench-bar.yours { background: #5B8DEF; }
+.bench-bar.average { background: #F5A623; }
+.bench-bar.good { background: #34C759; }
+
+.bench-value {
+    font-size: 0.75rem;
+    color: #636366;
+    text-align: right;
+}
+
+.bench-diff {
+    font-size: 0.8rem;
+    margin-top: 0.35rem;
+    font-weight: 500;
+}
+
+.bench-diff.above, .diff-above { color: #FF3B30; }
+.bench-diff.below, .diff-below { color: #34C759; }
+
+/* ── Assumptions Panel ── */
+.collapsible-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-icon {
+    font-size: 1.2rem;
+    color: #8e8e93;
+}
+
+.collapsed-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.collapsed-content.expanded {
+    max-height: 1000px;
+}
+
+.assumptions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+}
+
+.assumptions-table td {
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid #f2f2f7;
+    font-size: 0.8rem;
+}
+
+.assumption-facility {
+    margin-bottom: 1rem;
+}
+
+.assumption-facility h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ── Export ── */
+.dash-export {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+/* ── Error ── */
+.error {
+    color: #FF3B30;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* ── Custom EUI ── */
+#custom-eui-section {
+    margin-top: 0.75rem;
+}
+
+#eui-input-wrap {
+    margin-top: 0.5rem;
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
     #app {
         grid-template-columns: 1fr;
     }
+
     #visual-panel {
         position: relative;
-        height: 300px;
+        height: 280px;
+    }
+
+    #wizard-panel {
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid #e5e5ea;
+    }
+
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bench-bar-row {
+        grid-template-columns: 70px 1fr 80px;
+    }
+}
+
+/* ── Print styles for PDF export ── */
+@media print {
+    #wizard-panel, #visual-panel, .btn-primary, .btn-secondary, .btn-text, .dash-export {
+        display: none !important;
+    }
+
+    #dashboard {
+        display: block !important;
+    }
+
+    .dashboard-wrapper {
+        padding: 0;
+    }
+
+    .dash-card {
+        box-shadow: none;
+        border: 1px solid #e5e5ea;
+        break-inside: avoid;
+    }
+
+    .collapsed-content {
+        max-height: none !important;
     }
 }
