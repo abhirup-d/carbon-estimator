@@ -1,0 +1,397 @@
+{
+  "AR": {
+    "name": "Argentina",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "AR-B", "name": "Buenos Aires" },
+      { "code": "AR-C", "name": "Ciudad Autónoma de Buenos Aires" },
+      { "code": "AR-X", "name": "Córdoba" },
+      { "code": "AR-S", "name": "Santa Fe" },
+      { "code": "AR-OTHER", "name": "Other regions" }
+    ]
+  },
+  "AU": {
+    "name": "Australia",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "AU-NSW", "name": "New South Wales" },
+      { "code": "AU-VIC", "name": "Victoria" },
+      { "code": "AU-QLD", "name": "Queensland" },
+      { "code": "AU-SA", "name": "South Australia" },
+      { "code": "AU-WA", "name": "Western Australia" },
+      { "code": "AU-TAS", "name": "Tasmania" },
+      { "code": "AU-NT", "name": "Northern Territory" },
+      { "code": "AU-ACT", "name": "Australian Capital Territory" }
+    ]
+  },
+  "BR": {
+    "name": "Brazil",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "lpg",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "BR-SP", "name": "São Paulo" },
+      { "code": "BR-RJ", "name": "Rio de Janeiro" },
+      { "code": "BR-MG", "name": "Minas Gerais" },
+      { "code": "BR-RS", "name": "Rio Grande do Sul" },
+      { "code": "BR-OTHER", "name": "Other regions" }
+    ]
+  },
+  "CA": {
+    "name": "Canada",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "CA-BC", "name": "British Columbia" },
+      { "code": "CA-AB", "name": "Alberta" },
+      { "code": "CA-SK", "name": "Saskatchewan" },
+      { "code": "CA-MB", "name": "Manitoba" },
+      { "code": "CA-ON", "name": "Ontario" },
+      { "code": "CA-QC", "name": "Quebec" },
+      { "code": "CA-NS", "name": "Nova Scotia" },
+      { "code": "CA-OTHER", "name": "Other provinces/territories" }
+    ]
+  },
+  "CN": {
+    "name": "China",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "CN-GD", "name": "Guangdong" },
+      { "code": "CN-SH", "name": "Shanghai" },
+      { "code": "CN-BJ", "name": "Beijing" },
+      { "code": "CN-SD", "name": "Shandong" },
+      { "code": "CN-JS", "name": "Jiangsu" },
+      { "code": "CN-SC", "name": "Sichuan" },
+      { "code": "CN-OTHER", "name": "Other provinces" }
+    ]
+  },
+  "FR": {
+    "name": "France",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "diesel",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "FR-IDF", "name": "Île-de-France" },
+      { "code": "FR-ARA", "name": "Auvergne-Rhône-Alpes" },
+      { "code": "FR-NAQ", "name": "Nouvelle-Aquitaine" },
+      { "code": "FR-OTHER", "name": "Other regions" }
+    ]
+  },
+  "DE": {
+    "name": "Germany",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "diesel",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "DE-NW", "name": "North Rhine-Westphalia" },
+      { "code": "DE-BY", "name": "Bavaria" },
+      { "code": "DE-BW", "name": "Baden-Württemberg" },
+      { "code": "DE-OTHER", "name": "Other states" }
+    ]
+  },
+  "IN": {
+    "name": "India",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "lpg",
+      "furnace": "fuel_oil",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "IN-MH", "name": "Maharashtra" },
+      { "code": "IN-DL", "name": "Delhi" },
+      { "code": "IN-KA", "name": "Karnataka" },
+      { "code": "IN-TN", "name": "Tamil Nadu" },
+      { "code": "IN-GJ", "name": "Gujarat" },
+      { "code": "IN-UP", "name": "Uttar Pradesh" },
+      { "code": "IN-RJ", "name": "Rajasthan" },
+      { "code": "IN-WB", "name": "West Bengal" },
+      { "code": "IN-AP", "name": "Andhra Pradesh" },
+      { "code": "IN-TS", "name": "Telangana" },
+      { "code": "IN-KL", "name": "Kerala" },
+      { "code": "IN-PB", "name": "Punjab" },
+      { "code": "IN-HR", "name": "Haryana" },
+      { "code": "IN-OR", "name": "Odisha" },
+      { "code": "IN-OTHER", "name": "Other states/UTs" }
+    ]
+  },
+  "ID": {
+    "name": "Indonesia",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "fuel_oil",
+      "cooking": "lpg",
+      "furnace": "fuel_oil",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "ID-JK", "name": "Jakarta" },
+      { "code": "ID-JW", "name": "Java" },
+      { "code": "ID-SU", "name": "Sumatra" },
+      { "code": "ID-KA", "name": "Kalimantan" },
+      { "code": "ID-OTHER", "name": "Other islands" }
+    ]
+  },
+  "IT": {
+    "name": "Italy",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "diesel",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "IT-LOM", "name": "Lombardy" },
+      { "code": "IT-LAZ", "name": "Lazio" },
+      { "code": "IT-CAM", "name": "Campania" },
+      { "code": "IT-OTHER", "name": "Other regions" }
+    ]
+  },
+  "JP": {
+    "name": "Japan",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "JP-13", "name": "Tokyo" },
+      { "code": "JP-27", "name": "Osaka" },
+      { "code": "JP-23", "name": "Aichi (Nagoya)" },
+      { "code": "JP-01", "name": "Hokkaido" },
+      { "code": "JP-OTHER", "name": "Other prefectures" }
+    ]
+  },
+  "MX": {
+    "name": "Mexico",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "lpg",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "MX-CMX", "name": "Mexico City" },
+      { "code": "MX-JAL", "name": "Jalisco" },
+      { "code": "MX-NLE", "name": "Nuevo León" },
+      { "code": "MX-OTHER", "name": "Other states" }
+    ]
+  },
+  "RU": {
+    "name": "Russia",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "RU-MOW", "name": "Moscow" },
+      { "code": "RU-SPE", "name": "St. Petersburg" },
+      { "code": "RU-SIB", "name": "Siberia" },
+      { "code": "RU-OTHER", "name": "Other federal subjects" }
+    ]
+  },
+  "SA": {
+    "name": "Saudi Arabia",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "lpg",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "SA-RD", "name": "Riyadh" },
+      { "code": "SA-MK", "name": "Makkah" },
+      { "code": "SA-SH", "name": "Eastern Province" },
+      { "code": "SA-OTHER", "name": "Other regions" }
+    ]
+  },
+  "ZA": {
+    "name": "South Africa",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "lpg",
+      "furnace": "fuel_oil",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "ZA-GP", "name": "Gauteng" },
+      { "code": "ZA-WC", "name": "Western Cape" },
+      { "code": "ZA-KZN", "name": "KwaZulu-Natal" },
+      { "code": "ZA-OTHER", "name": "Other provinces" }
+    ]
+  },
+  "KR": {
+    "name": "South Korea",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "KR-11", "name": "Seoul" },
+      { "code": "KR-26", "name": "Busan" },
+      { "code": "KR-28", "name": "Incheon" },
+      { "code": "KR-OTHER", "name": "Other regions" }
+    ]
+  },
+  "TR": {
+    "name": "Turkey",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "diesel",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "TR-34", "name": "Istanbul" },
+      { "code": "TR-06", "name": "Ankara" },
+      { "code": "TR-35", "name": "Izmir" },
+      { "code": "TR-OTHER", "name": "Other provinces" }
+    ]
+  },
+  "GB": {
+    "name": "United Kingdom",
+    "unitSystem": "metric",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "diesel",
+      "fleet_van": "diesel",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "GB-ENG", "name": "England" },
+      { "code": "GB-SCT", "name": "Scotland" },
+      { "code": "GB-WLS", "name": "Wales" },
+      { "code": "GB-NIR", "name": "Northern Ireland" }
+    ]
+  },
+  "US": {
+    "name": "United States",
+    "unitSystem": "imperial",
+    "defaultFuelMix": {
+      "heating_boiler": "natural_gas",
+      "cooking": "natural_gas",
+      "furnace": "natural_gas",
+      "generator": "diesel",
+      "fleet_car": "gasoline",
+      "fleet_van": "gasoline",
+      "fleet_truck": "diesel"
+    },
+    "regions": [
+      { "code": "US-CAMX", "name": "California (CAMX)" },
+      { "code": "US-ERCT", "name": "Texas (ERCOT)" },
+      { "code": "US-FRCC", "name": "Florida (FRCC)" },
+      { "code": "US-MROE", "name": "Midwest (MRO East)" },
+      { "code": "US-MROW", "name": "Midwest (MRO West)" },
+      { "code": "US-NEWE", "name": "New England (NEWE)" },
+      { "code": "US-NWPP", "name": "Northwest (NWPP)" },
+      { "code": "US-RFCE", "name": "Mid-Atlantic (RFC East)" },
+      { "code": "US-RFCM", "name": "Midwest (RFC Michigan)" },
+      { "code": "US-RFCW", "name": "Midwest (RFC West)" },
+      { "code": "US-SRSO", "name": "Southeast (SRSO)" },
+      { "code": "US-OTHER", "name": "Other regions" }
+    ]
+  }
+}
