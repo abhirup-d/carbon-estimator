@@ -619,6 +619,13 @@ select:focus, input:focus {
 .bench-diff.above, .diff-above { color: #FF3B30; }
 .bench-diff.below, .diff-below { color: #34C759; }
 
+.bench-note {
+    font-size: 0.7rem;
+    color: #AEAEB2;
+    margin-top: 0.25rem;
+    font-style: italic;
+}
+
 /* ── Assumptions Panel ── */
 .collapsible-header {
     cursor: pointer;

@@ -19,19 +19,8 @@ const UNCERTAINTY = {
     school:              { low: 0.65, high: 1.45 }
 };
 
-// ── Benchmark data: average kgCO2e/m2/yr by facility type and climate zone ──
-const BENCHMARKS = {
-    office:              { "1": 95, "2": 85, "3": 80, "4": 75, "5": 72, "6": 70, "7": 68, "8": 66 },
-    retail:              { "1": 105, "2": 95, "3": 88, "4": 82, "5": 78, "6": 75, "7": 72, "8": 70 },
-    warehouse:           { "1": 35, "2": 32, "3": 30, "4": 28, "5": 26, "6": 25, "7": 24, "8": 23 },
-    light_manufacturing: { "1": 130, "2": 120, "3": 112, "4": 105, "5": 100, "6": 97, "7": 94, "8": 92 },
-    heavy_manufacturing: { "1": 210, "2": 198, "3": 188, "4": 180, "5": 174, "6": 170, "7": 166, "8": 162 },
-    restaurant:          { "1": 160, "2": 148, "3": 140, "4": 132, "5": 126, "6": 122, "7": 118, "8": 115 },
-    hospital:            { "1": 170, "2": 158, "3": 148, "4": 140, "5": 134, "6": 130, "7": 126, "8": 122 },
-    hotel:               { "1": 115, "2": 105, "3": 98, "4": 92, "5": 88, "6": 85, "7": 82, "8": 80 },
-    residential:         { "1": 42, "2": 38, "3": 35, "4": 33, "5": 31, "6": 30, "7": 29, "8": 28 },
-    school:              { "1": 78, "2": 72, "3": 66, "4": 62, "5": 58, "6": 56, "7": 54, "8": 52 }
-};
+// BENCHMARKS table removed — benchmark comparison now computed dynamically
+// using the same EUI model + user's actual grid EF (see getBenchmarkComparison)
 
 /**
  * Calculate Scope 2 emissions from grid electricity.
@@ -282,19 +271,48 @@ export function aggregateFacilities(facilities) {
 }
 
 /**
- * Compare a facility's emissions intensity against sector benchmarks.
- * @param {number} totalEmissions - Total kgCO2e/yr
+ * Compare a facility's emissions intensity against dynamically computed benchmarks.
+ *
+ * Average = what a standard-condition building (no age/efficiency adjustments) would emit
+ *   at this exact location, using the same EUI model + the user's actual grid EF.
+ *
+ * Good Practice = what a modern (0.75× EUI), high-efficiency (0.70× equipment) building
+ *   would emit. These multipliers come from the same building age and equipment efficiency
+ *   factors used in the calculation, representing post-2015 construction with best-in-class
+ *   equipment (condensing boilers, modern generators).
+ *
+ * @param {number} totalEmissions - Actual calculated kgCO2e/yr for this facility
  * @param {number} area - Floor area in m²
  * @param {string} facilityType - e.g. 'office', 'warehouse'
- * @param {string} climateZone - Climate zone key e.g. '4'
- * @returns {{ emissionsPerM2: number, avgEmissionsPerM2: number, goodPracticePerM2: number, percentDiff: number }}
+ * @param {number} gridEF - The user's actual grid EF (kgCO2e/kWh)
+ * @param {number|null} hdd - Heating Degree Days (or null for zone fallback)
+ * @param {number|null} cdd - Cooling Degree Days (or null for zone fallback)
+ * @param {object|null} euiBenchmarks - Zone-based EUI lookup (fallback)
+ * @param {string|null} climateZone - ASHRAE zone (fallback)
+ * @returns {{ emissionsPerM2, avgEmissionsPerM2, goodPracticePerM2, percentDiff }}
  */
-export function getBenchmarkComparison(totalEmissions, area, facilityType, climateZone) {
+export function getBenchmarkComparison(totalEmissions, area, facilityType, gridEF, hdd, cdd, euiBenchmarks, climateZone) {
     const emissionsPerM2 = area > 0 ? totalEmissions / area : 0;
 
-    const zoneMap = BENCHMARKS[facilityType] || BENCHMARKS['office'];
-    const avgEmissionsPerM2 = zoneMap[climateZone] || zoneMap['4'] || 80;
-    const goodPracticePerM2 = avgEmissionsPerM2 * 0.6;
+    // Compute the "average" EUI for a standard building at this location
+    let avgEUI;
+    if (hdd != null && cdd != null) {
+        avgEUI = calculateEUIFromHDDCDD(facilityType, hdd, cdd); // no age multiplier
+    } else if (euiBenchmarks && euiBenchmarks[facilityType]) {
+        const zoneMap = euiBenchmarks[facilityType];
+        avgEUI = zoneMap[climateZone] || zoneMap['4'] || 80;
+    } else {
+        avgEUI = BASE_ELECTRICAL[facilityType] || 65;
+    }
+
+    // Average benchmark: standard building, standard equipment, at user's actual grid EF
+    // Scope 2 only (Scope 1 varies too much by equipment selection to benchmark meaningfully)
+    const avgEmissionsPerM2 = avgEUI * gridEF;
+
+    // Good practice: modern building (0.75× EUI) at same location
+    // Represents post-2015 high-efficiency construction
+    const goodPracticePerM2 = avgEUI * 0.75 * gridEF;
+
     const percentDiff = avgEmissionsPerM2 > 0
         ? ((emissionsPerM2 - avgEmissionsPerM2) / avgEmissionsPerM2) * 100
         : 0;

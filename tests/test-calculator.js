@@ -84,10 +84,15 @@ assert('Aggregation: grand total', agg.grandTotal, 35000);
 // ── Benchmark Tests ──
 section('Benchmark Comparison');
 
-const bench = getBenchmarkComparison(30000, 500, 'office', '4');
+// 30000 kgCO2e total, 500 m2 office, grid EF 0.82, HDD=300, CDD=2500 (Delhi-like)
+const bench = getBenchmarkComparison(30000, 500, 'office', 0.82, 300, 2500, null, '2');
 assert('Benchmark: emissions per m2', bench.emissionsPerM2, 60);
-assert('Benchmark: avg > 0', bench.avgEmissionsPerM2 > 0 ? 1 : 0, 1, 0);
-assert('Benchmark: good practice > 0', bench.goodPracticePerM2 > 0 ? 1 : 0, 1, 0);
+// Avg = EUI(office, HDD=300, CDD=2500) * 0.82
+// EUI = base(65) + CDD(2500)*coeff(0.045) = 65 + 112.5 = 177.5
+// avgEmissionsPerM2 = 177.5 * 0.82 = 145.55
+assert('Benchmark: avg uses actual grid EF', bench.avgEmissionsPerM2, 145.55, 2);
+// Good practice = 177.5 * 0.75 * 0.82 = 109.16
+assert('Benchmark: good practice = 0.75x avg EUI', bench.goodPracticePerM2, 109.16, 2);
 
 // ── Summary ──
 results.innerHTML += `<div class="summary">${passed} passed, ${failed} failed</div>`;

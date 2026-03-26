@@ -37,8 +37,13 @@
 
 <a href="index.html" class="back-link">&larr; Back to Estimator</a>
 
-<h1>Methodology</h1>
-<p class="version">Carbon Emission Estimator v1.0 — Last updated: March 2026</p>
+<div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+    <img src="svg/oren-logo.png" alt="Oren" style="height: 48px;" />
+    <div>
+        <h1 style="margin: 0;">Methodology</h1>
+        <p class="version" style="margin: 0;">Carbon Emission Estimator v1.0 — Last updated: March 2026</p>
+    </div>
+</div>
 
 <p>This document explains every assumption, data source, and formula used by the Oren Carbon Emission Estimator. Every data point is sourced from publicly available, authoritative databases — making this the most accurate proxy-based carbon estimator available with fully open, verifiable data.</p>
 
@@ -256,11 +261,14 @@
 
 <h2>6. Benchmark Comparison</h2>
 
-<p>The dashboard compares the estimated emissions intensity (kgCO2e/m²/yr) against:</p>
+<p>The dashboard compares the estimated emissions intensity (kgCO2e/m²/yr) against dynamically computed benchmarks using the <strong>same EUI model and the user's actual grid emission factor</strong> — not a static lookup table.</p>
+
 <ul>
-    <li><strong>Average</strong> — typical for that facility type and climate zone</li>
-    <li><strong>Good Practice</strong> — 60% of the average (approximating the 25th percentile)</li>
+    <li><strong>Average</strong> — the Scope 2 emissions intensity of a standard-condition building (no age or efficiency adjustments) of the same type, at the same location, using the same grid EF. Computed as: <code>EUI(facility type, HDD, CDD) × Grid EF</code></li>
+    <li><strong>Good Practice</strong> — the emissions intensity of a modern, high-efficiency building at the same location. Computed as: <code>EUI × 0.75 (post-2015 building age multiplier) × Grid EF</code>. The 0.75 factor represents the same building age adjustment used in the main calculation for "Post-2015 / High-efficiency" buildings.</li>
 </ul>
+
+<p>This means the benchmarks are <strong>country-specific</strong>. An office in France (grid EF 0.056) will show a much lower "average" than the same office in India (grid EF 0.727), because the grid is cleaner. The comparison tells you how your facility compares to peers at the same location — not against a global average.</p>
 
 <h2>7. What This Estimator Does NOT Cover</h2>
 
@@ -283,7 +291,7 @@
     <tr><td>Equipment fuel benchmarks</td><td>CBECS, CIBSE Guide F, industry engineering references</td><td>2018–2023</td></tr>
     <tr><td>HDD/CDD data</td><td>ASHRAE Weather Data, BizEE, WMO climate normals</td><td>1991–2020 averages</td></tr>
     <tr><td>Vehicle fuel consumption</td><td>IEA Transport, country transport agencies</td><td>2022–2023</td></tr>
-    <tr><td>Benchmark comparisons</td><td>Derived from EUI × global average grid EF (~0.45 kgCO2e/kWh)</td><td>Synthetic</td></tr>
+    <tr><td>Benchmark comparisons</td><td>Dynamically computed: EUI model × user's actual grid EF</td><td>Same as above</td></tr>
 </table>
 
 <h2>9. How to Improve Your Estimate</h2>

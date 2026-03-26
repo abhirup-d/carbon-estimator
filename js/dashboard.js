@@ -215,9 +215,12 @@ function buildBenchmarkBars(facilities) {
         const area = facility.area || 1;
         const type = facility.type || facility.facilityType || 'office';
         const zone = String(facility.climateZone || '4');
+        const gridEF = facility.gridEFUsed || 0.5;
+        const hdd = facility.hdd != null ? facility.hdd : null;
+        const cdd = facility.cdd != null ? facility.cdd : null;
 
         const { emissionsPerM2, avgEmissionsPerM2, goodPracticePerM2, percentDiff } =
-            getBenchmarkComparison(totalEmissions, area, type, zone);
+            getBenchmarkComparison(totalEmissions, area, type, gridEF, hdd, cdd, null, zone);
 
         const maxVal = Math.max(emissionsPerM2, avgEmissionsPerM2, goodPracticePerM2) * 1.3 || 1;
 
@@ -263,6 +266,7 @@ function buildBenchmarkBars(facilities) {
                     </div>
                 </div>
                 <p class="bench-diff ${diffClass}">${diffText}</p>
+                <p class="bench-note">Average = standard building at your location &amp; grid. Good practice = post-2015 high-efficiency building (0.75× EUI).</p>
             </div>
         `;
     }).join('');
@@ -432,8 +436,7 @@ export function renderDashboard(container, facilities, data) {
             <!-- Print-only report header -->
             <div class="report-header print-only">
                 <div class="report-logo">
-                    <strong style="font-size: 1.4rem; color: #2E7D32;">Oren</strong>
-                    <span style="font-size: 0.75rem; color: #8e8e93; margin-left: 0.5rem;">by Maroon Oak Technologies</span>
+                    <img src="svg/oren-logo.png" alt="Oren" style="height: 40px;" />
                 </div>
                 <div class="report-title">
                     <h1 style="font-size: 1.3rem; margin: 0;">Carbon Emission Estimate</h1>
