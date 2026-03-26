@@ -17,6 +17,7 @@ export const appState = {
         area: 0,
         areaUnit: 'sqm',
         customEUI: null,
+        buildingAge: 'standard',  // 'old' | 'standard' | 'modern'
         equipment: {
             heating_boiler: false,
             generator: false,
@@ -179,8 +180,12 @@ function computeCurrentFacility() {
     const { currentFacility, overrides } = appState;
     const lookups = getLookups();
 
-    // Apply EUI override
-    const euiOverride = overrides.eui != null ? Number(overrides.eui) : currentFacility.customEUI;
+    // Building age multiplier: adjusts EUI for building quality/age
+    const AGE_MULTIPLIERS = { old: 1.3, standard: 1.0, modern: 0.75 };
+    const ageMultiplier = AGE_MULTIPLIERS[currentFacility.buildingAge] || 1.0;
+
+    // Apply EUI override (if user set custom EUI, don't apply age multiplier)
+    let euiOverride = overrides.eui != null ? Number(overrides.eui) : currentFacility.customEUI;
 
     // Apply grid EF override
     const gridEFOverride = overrides.gridEF != null ? Number(overrides.gridEF) : lookups.gridEF;
@@ -188,7 +193,8 @@ function computeCurrentFacility() {
     const facility = {
         ...currentFacility,
         area: toSqm(currentFacility.area, currentFacility.areaUnit),
-        customEUI: euiOverride
+        customEUI: euiOverride,
+        buildingAgeMultiplier: euiOverride ? 1.0 : ageMultiplier
     };
 
     const result = calculateFacility(facility, { ...lookups, gridEF: gridEFOverride });
@@ -381,6 +387,15 @@ function renderStep2() {
                     <button id="unit-toggle" class="btn-secondary" type="button">sq m</button>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="building-age">Building Age & Condition</label>
+                <select id="building-age">
+                    <option value="old">Pre-2000 / Poor insulation</option>
+                    <option value="standard" selected>2000–2015 / Standard</option>
+                    <option value="modern">Post-2015 / High-efficiency</option>
+                </select>
+                <small>Adjusts energy estimates: older buildings use ~30% more, modern ~25% less.</small>
+            </div>
             <div class="form-group custom-eui-group">
                 <button id="custom-eui-toggle" class="btn-text" type="button">+ Custom EUI (advanced)</button>
                 <div id="custom-eui-section" class="hidden">
@@ -404,6 +419,7 @@ function bindStep2Events() {
     const typeSelect     = document.getElementById('facility-type');
     const areaInput      = document.getElementById('facility-area');
     const unitToggle     = document.getElementById('unit-toggle');
+    const buildingAgeSelect = document.getElementById('building-age');
     const customEUIBtn   = document.getElementById('custom-eui-toggle');
     const customEUISection = document.getElementById('custom-eui-section');
     const customEUIInput = document.getElementById('custom-eui-input');
@@ -419,6 +435,10 @@ function bindStep2Events() {
 
     nameInput.addEventListener('input', () => {
         appState.currentFacility.name = nameInput.value.trim();
+    });
+
+    buildingAgeSelect.addEventListener('change', () => {
+        appState.currentFacility.buildingAge = buildingAgeSelect.value;
     });
 
     typeSelect.addEventListener('change', () => {
@@ -640,7 +660,8 @@ function renderStep4Content() {
             <strong>${currentFacility.name || 'Unnamed Facility'}</strong> —
             ${FACILITY_TYPE_LABELS[currentFacility.facilityType] || currentFacility.facilityType} |
             ${displayArea.toLocaleString()} ${unit === 'sqft' ? 'sq ft' : 'm²'}
-            ${unit === 'sqft' ? `(${areaInSqm.toFixed(0)} m²)` : ''}
+            ${unit === 'sqft' ? `(${areaInSqm.toFixed(0)} m²)` : ''} |
+            Building: ${{ old: 'Pre-2000', standard: '2000–2015', modern: 'Post-2015' }[currentFacility.buildingAge] || 'Standard'}
         </div>
 
         <div class="review-section">
@@ -785,6 +806,7 @@ function bindStep5Events() {
             area: 0,
             areaUnit: appState.currentFacility.areaUnit, // preserve unit preference
             customEUI: null,
+            buildingAge: 'standard',
             equipment: {
                 heating_boiler: false,
                 generator: false,

@@ -85,7 +85,8 @@ export function calculateFacility(facility, lookups) {
         area,
         facilityType,
         equipment = {},
-        customEUI = null
+        customEUI = null,
+        buildingAgeMultiplier = 1.0
     } = facility;
 
     const {
@@ -102,7 +103,7 @@ export function calculateFacility(facility, lookups) {
     let euiUsed = customEUI;
     if (euiUsed == null) {
         const zoneMap = euiBenchmarks[facilityType] || {};
-        euiUsed = zoneMap[climateZone] || zoneMap['4'] || 80;
+        euiUsed = (zoneMap[climateZone] || zoneMap['4'] || 80) * buildingAgeMultiplier;
     }
     const gridEFUsed = gridEF;
     const scope2Result = calculateScope2(area, euiUsed, gridEFUsed);
