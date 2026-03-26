@@ -1,0 +1,86 @@
+{
+  "heating_boiler": {
+    "fuelKey": "heating_boiler",
+    "basis": "area",
+    "description": "Heating boiler (space heating)",
+    "byClimateZone": {
+      "1": 0.5, "2": 2.0, "3": 5.0, "4": 9.0, "5": 13.0, "6": 18.0, "7": 24.0, "8": 30.0
+    },
+    "_comment": "m3 natural gas (or equivalent litres fuel oil) per m2 per year."
+  },
+  "generator": {
+    "fuelKey": "generator",
+    "basis": "area",
+    "description": "Backup diesel generator",
+    "byClimateZone": {
+      "1": 1.2, "2": 1.0, "3": 0.8, "4": 0.6, "5": 0.5, "6": 0.5, "7": 0.5, "8": 0.5
+    },
+    "_comment": "Litres diesel per m2 per year."
+  },
+  "cooking": {
+    "fuelKey": "cooking",
+    "basis": "area",
+    "description": "Commercial cooking equipment",
+    "facilityMultiplier": {
+      "restaurant": 3.0, "hotel": 1.5, "hospital": 1.2, "residential": 0.8, "_default": 0.3
+    },
+    "byClimateZone": {
+      "1": 2.0, "2": 2.0, "3": 2.0, "4": 2.0, "5": 2.0, "6": 2.0, "7": 2.0, "8": 2.0
+    },
+    "_comment": "kg LPG (or m3 natural gas) per m2 per year. Uniform across climate."
+  },
+  "furnace": {
+    "fuelKey": "furnace",
+    "basis": "area",
+    "description": "Industrial furnace or kiln",
+    "facilityMultiplier": {
+      "heavy_manufacturing": 2.5, "light_manufacturing": 1.5, "_default": 0.5
+    },
+    "byClimateZone": {
+      "1": 15.0, "2": 15.0, "3": 15.0, "4": 15.0, "5": 15.0, "6": 15.0, "7": 15.0, "8": 15.0
+    },
+    "_comment": "m3 natural gas (or litres fuel oil) per m2 per year. Climate-independent."
+  },
+  "fleet_car": {
+    "fuelKey": "fleet_car",
+    "basis": "count",
+    "description": "Company car",
+    "annualKm": {
+      "AR": 15000, "AU": 15000, "BR": 15000, "CA": 18000, "CN": 15000,
+      "FR": 15000, "DE": 15000, "IN": 15000, "ID": 12000, "IT": 15000,
+      "JP": 10000, "MX": 15000, "RU": 15000, "SA": 20000, "ZA": 15000,
+      "KR": 15000, "TR": 15000, "GB": 13000, "US": 20000,
+      "_default": 15000
+    },
+    "fuelConsumptionPerKm": 0.08,
+    "_comment": "Litres per km. Average passenger car."
+  },
+  "fleet_van": {
+    "fuelKey": "fleet_van",
+    "basis": "count",
+    "description": "Company van",
+    "annualKm": {
+      "AR": 20000, "AU": 20000, "BR": 20000, "CA": 22000, "CN": 20000,
+      "FR": 20000, "DE": 20000, "IN": 25000, "ID": 20000, "IT": 20000,
+      "JP": 15000, "MX": 20000, "RU": 20000, "SA": 25000, "ZA": 20000,
+      "KR": 20000, "TR": 20000, "GB": 18000, "US": 24000,
+      "_default": 20000
+    },
+    "fuelConsumptionPerKm": 0.12,
+    "_comment": "Litres per km. Light commercial vehicle."
+  },
+  "fleet_truck": {
+    "fuelKey": "fleet_truck",
+    "basis": "count",
+    "description": "Company truck",
+    "annualKm": {
+      "AR": 40000, "AU": 40000, "BR": 40000, "CA": 45000, "CN": 40000,
+      "FR": 35000, "DE": 35000, "IN": 50000, "ID": 35000, "IT": 35000,
+      "JP": 30000, "MX": 40000, "RU": 40000, "SA": 45000, "ZA": 40000,
+      "KR": 35000, "TR": 40000, "GB": 35000, "US": 50000,
+      "_default": 40000
+    },
+    "fuelConsumptionPerKm": 0.25,
+    "_comment": "Litres per km. Medium/heavy truck."
+  }
+}

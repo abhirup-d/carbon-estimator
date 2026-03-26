@@ -1,0 +1,102 @@
+{
+  "office": {
+    "1": { "electricity": 180, "heating": 5 },
+    "2": { "electricity": 160, "heating": 15 },
+    "3": { "electricity": 140, "heating": 40 },
+    "4": { "electricity": 130, "heating": 70 },
+    "5": { "electricity": 120, "heating": 100 },
+    "6": { "electricity": 115, "heating": 140 },
+    "7": { "electricity": 110, "heating": 180 },
+    "8": { "electricity": 105, "heating": 210 }
+  },
+  "retail": {
+    "1": { "electricity": 200, "heating": 5 },
+    "2": { "electricity": 180, "heating": 15 },
+    "3": { "electricity": 160, "heating": 35 },
+    "4": { "electricity": 150, "heating": 60 },
+    "5": { "electricity": 140, "heating": 90 },
+    "6": { "electricity": 135, "heating": 120 },
+    "7": { "electricity": 130, "heating": 150 },
+    "8": { "electricity": 125, "heating": 180 }
+  },
+  "warehouse": {
+    "1": { "electricity": 60, "heating": 2 },
+    "2": { "electricity": 55, "heating": 8 },
+    "3": { "electricity": 50, "heating": 20 },
+    "4": { "electricity": 45, "heating": 40 },
+    "5": { "electricity": 40, "heating": 60 },
+    "6": { "electricity": 38, "heating": 80 },
+    "7": { "electricity": 35, "heating": 100 },
+    "8": { "electricity": 33, "heating": 120 }
+  },
+  "light_manufacturing": {
+    "1": { "electricity": 250, "heating": 10 },
+    "2": { "electricity": 230, "heating": 25 },
+    "3": { "electricity": 210, "heating": 50 },
+    "4": { "electricity": 200, "heating": 80 },
+    "5": { "electricity": 190, "heating": 110 },
+    "6": { "electricity": 185, "heating": 140 },
+    "7": { "electricity": 180, "heating": 170 },
+    "8": { "electricity": 175, "heating": 200 }
+  },
+  "heavy_manufacturing": {
+    "1": { "electricity": 400, "heating": 20 },
+    "2": { "electricity": 380, "heating": 40 },
+    "3": { "electricity": 360, "heating": 70 },
+    "4": { "electricity": 350, "heating": 100 },
+    "5": { "electricity": 340, "heating": 130 },
+    "6": { "electricity": 335, "heating": 160 },
+    "7": { "electricity": 330, "heating": 190 },
+    "8": { "electricity": 325, "heating": 220 }
+  },
+  "restaurant": {
+    "1": { "electricity": 300, "heating": 10 },
+    "2": { "electricity": 280, "heating": 25 },
+    "3": { "electricity": 260, "heating": 50 },
+    "4": { "electricity": 250, "heating": 80 },
+    "5": { "electricity": 240, "heating": 110 },
+    "6": { "electricity": 235, "heating": 140 },
+    "7": { "electricity": 230, "heating": 170 },
+    "8": { "electricity": 225, "heating": 200 }
+  },
+  "hospital": {
+    "1": { "electricity": 320, "heating": 15 },
+    "2": { "electricity": 300, "heating": 35 },
+    "3": { "electricity": 280, "heating": 65 },
+    "4": { "electricity": 270, "heating": 100 },
+    "5": { "electricity": 260, "heating": 135 },
+    "6": { "electricity": 255, "heating": 170 },
+    "7": { "electricity": 250, "heating": 200 },
+    "8": { "electricity": 245, "heating": 230 }
+  },
+  "hotel": {
+    "1": { "electricity": 220, "heating": 10 },
+    "2": { "electricity": 200, "heating": 25 },
+    "3": { "electricity": 180, "heating": 50 },
+    "4": { "electricity": 170, "heating": 80 },
+    "5": { "electricity": 160, "heating": 110 },
+    "6": { "electricity": 155, "heating": 140 },
+    "7": { "electricity": 150, "heating": 170 },
+    "8": { "electricity": 145, "heating": 200 }
+  },
+  "residential": {
+    "1": { "electricity": 80, "heating": 3 },
+    "2": { "electricity": 70, "heating": 15 },
+    "3": { "electricity": 60, "heating": 35 },
+    "4": { "electricity": 55, "heating": 60 },
+    "5": { "electricity": 50, "heating": 85 },
+    "6": { "electricity": 48, "heating": 110 },
+    "7": { "electricity": 45, "heating": 135 },
+    "8": { "electricity": 43, "heating": 160 }
+  },
+  "school": {
+    "1": { "electricity": 150, "heating": 5 },
+    "2": { "electricity": 135, "heating": 15 },
+    "3": { "electricity": 120, "heating": 35 },
+    "4": { "electricity": 110, "heating": 60 },
+    "5": { "electricity": 100, "heating": 85 },
+    "6": { "electricity": 95, "heating": 110 },
+    "7": { "electricity": 90, "heating": 135 },
+    "8": { "electricity": 85, "heating": 160 }
+  }
+}
